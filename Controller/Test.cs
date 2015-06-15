@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace Controller
 {
@@ -16,10 +17,94 @@ namespace Controller
         {
             InitializeComponent();
         }
+        private bool bWorking = false;
+        private void WorkThread()
+        {
+            while(bWorking)
+            {
+                //获取角色信息
+           //     UpdatePlayerInfo();
+                //血量少的话喝药
 
+                //如果离打怪点远,回来
+
+                //获取怪物信息
+           //     UpdateMonsterInfo();
+                //搜索怪物
+                //5码内有怪物则攻击
+
+                //走到怪物处
+                
+            }
+        }
+        private void btnStartWork_Click(object sender, EventArgs e)
+        {
+            if (bWorking == true)
+                return;
+            Thread t = new Thread(WorkThread);
+            t.IsBackground = true;
+            bWorking = true;
+            t.Start();
+        }
+
+        private void btnStopWork_Click(object sender, EventArgs e)
+        {
+            bWorking = false;
+            Thread.Sleep(500);
+        }
+        double GetDis(Pos a,Pos b)
+        {
+            double x=Math.Abs(a.X-b.X);
+            double y=Math.Abs(a.Y-b.Y);
+            return Math.Sqrt(x * x + y * y);
+        }
+        double GetDir(Pos center,Pos end)
+        {
+            double temp1 = (end.Y - center.Y);
+            double temp2 = (end.X - center.X);
+            double dir = Math.Atan2(temp1, temp2);
+            if (dir < 0)
+                dir += 2 * 3.14159266;
+            return dir;
+        }
+        Pos CalcAttackPos(Pos BasePos,Pos MonsterPos)
+        {
+            Pos Target=new Pos();
+            double dis = GetDis(BasePos, MonsterPos);
+            dis += 5;
+            double dir = GetDir(BasePos,MonsterPos);
+            double ylen =Math.Abs( Math.Sin(dir) * dis);
+            double xlen = Math.Abs(Math.Cos(dir) * dis);
+
+            if (dir >= 0 && dir < 1.57)
+            {
+                Target.X = BasePos.X + xlen;
+                Target.Y = BasePos.Y + ylen;
+            }
+            else if (dir >= 1.57 && dir < 3.1415926)
+            {
+                Target.X = BasePos.X - xlen;
+                Target.Y = BasePos.Y + ylen;
+            }
+            else if (dir >= 3.1415926 && dir < 4.7123889)
+            {
+                Target.X = BasePos.X - xlen;
+                Target.Y = BasePos.Y - ylen;
+            }
+            else if (dir >= 4.7123889)//4象限
+            {
+                Target.X = BasePos.X + xlen;
+                Target.Y = BasePos.Y - ylen;
+            }
+            return Target;
+        }
         private void button1_Click(object sender, EventArgs e)
         {
-            Program.client.Test(0,0);
+            Pos b = new Pos(0,0);
+            Pos m = new Pos(-1,5);
+            Pos t=CalcAttackPos(b,m);
+            MessageBox.Show(t.X.ToString()+" "+t.Y.ToString());
+          //  Program.client.Test(0,0);
         }
         private void btnGetPlayerInfo_Click(object sender, EventArgs e)
         {
@@ -131,6 +216,8 @@ namespace Controller
             int.TryParse(tb2.Text, out ctrl);
             Program.client.ClickKey(key,ctrl);
         }
+
+      
 
 
     }

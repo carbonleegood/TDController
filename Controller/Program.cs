@@ -35,7 +35,7 @@ namespace Controller
         [STAThread]
         static void Main()
         {
-            LockMySelf();
+         //   LockMySelf();
             string strUID = null;
             string strPID = null;
             //获取启动参数
@@ -72,7 +72,7 @@ namespace Controller
             strUID="GGGG";
             //strPWD="";
              //连接客户端
-            ConnectToWorker(strPID);
+      //      ConnectToWorker(strPID);
             //连接验证服务器
       //      StartCheck(strUID);
             Application.Run(new Test());

@@ -53,7 +53,21 @@ namespace Controller
         public int CurMissionNum { get; set; }//当前执行的任务脚本序号
     }
     //
-
+    class Pos
+    {
+        public double X;
+        public double Y;
+       public Pos()
+        {
+            X = 0;
+            Y = 0;
+        }
+       public Pos(double x, double y)
+        {
+            X = x;
+            Y = y;
+        }
+    }
     //角色
     //怪物
     //

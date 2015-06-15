@@ -55,6 +55,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.btnUnloadDll = new System.Windows.Forms.Button();
+            this.btnStartWork = new System.Windows.Forms.Button();
+            this.btnStopWork = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -327,11 +329,33 @@
             this.btnUnloadDll.Text = "卸载DLL";
             this.btnUnloadDll.UseVisualStyleBackColor = true;
             // 
+            // btnStartWork
+            // 
+            this.btnStartWork.Location = new System.Drawing.Point(376, 75);
+            this.btnStartWork.Name = "btnStartWork";
+            this.btnStartWork.Size = new System.Drawing.Size(75, 23);
+            this.btnStartWork.TabIndex = 11;
+            this.btnStartWork.Text = "启动工作线程";
+            this.btnStartWork.UseVisualStyleBackColor = true;
+            this.btnStartWork.Click += new System.EventHandler(this.btnStartWork_Click);
+            // 
+            // btnStopWork
+            // 
+            this.btnStopWork.Location = new System.Drawing.Point(376, 102);
+            this.btnStopWork.Name = "btnStopWork";
+            this.btnStopWork.Size = new System.Drawing.Size(75, 23);
+            this.btnStopWork.TabIndex = 12;
+            this.btnStopWork.Text = "停止工作线程";
+            this.btnStopWork.UseVisualStyleBackColor = true;
+            this.btnStopWork.Click += new System.EventHandler(this.btnStopWork_Click);
+            // 
             // Test
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(821, 362);
+            this.Controls.Add(this.btnStopWork);
+            this.Controls.Add(this.btnStartWork);
             this.Controls.Add(this.btnUnloadDll);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -385,6 +409,8 @@
         private System.Windows.Forms.Button btnClickKey;
         private System.Windows.Forms.Button btnPressKey;
         private System.Windows.Forms.Button btnUnloadDll;
+        private System.Windows.Forms.Button btnStartWork;
+        private System.Windows.Forms.Button btnStopWork;
     }
 }
 

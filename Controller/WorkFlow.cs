@@ -30,14 +30,14 @@ namespace Controller
             {
             //基本逻辑
                 //更新数据
-                FRet Ret = Update();
-                if (Ret != FRet.Success)
-                {
-                    //抛出更新失败异常
-                    ret.Ret = FRet.Fail;
-                    break;
-                }
-                Ret = BaseLogic();
+                //FRet Ret = Update();
+                //if (Ret != FRet.Success)
+                //{
+                //    //抛出更新失败异常
+                //    ret.Ret = FRet.Fail;
+                //    break;
+                //}
+                FRet Ret = BaseLogic();
                 if (Ret != FRet.DealScript)
                     continue;
             //执行脚本
