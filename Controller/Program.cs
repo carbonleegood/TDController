@@ -72,7 +72,7 @@ namespace Controller
             strUID="GGGG";
             //strPWD="";
              //连接客户端
-      //      ConnectToWorker(strPID);
+            ConnectToWorker(strPID);
             //连接验证服务器
       //      StartCheck(strUID);
             Application.Run(new Test());
@@ -109,7 +109,8 @@ namespace Controller
         static int ConnectToWorker(string strConnectKey)
         {
             string strKey ="GGGG";
-            Program.transport = new TPipe(@".", strKey);
+           // Program.transport = new TPipe(@".", strKey);
+            Program.transport = new TSocket("192.168.137.197",9992);
             Program.protocol = new TBinaryProtocol(Program.transport);
             Program.client = new GameFuncCall.Client(Program.protocol);
             Program.transport.Open();
