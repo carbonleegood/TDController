@@ -18,6 +18,32 @@ namespace Controller
             InitializeComponent();
         }
         private bool bWorking = false;
+        int MoveToPoint(Pos tPos)
+        {
+            Pos pPos = getplayerpos();
+
+            double dis = GetDis(pPos, tPos);
+            if (dis < 100.0)
+                return 0;
+            Program.client.PressKey(w, keydown);
+            for (int i = 0; i < 20; ++i)
+            {
+                //获取角色当前坐标
+                pPos = getplayerpos();
+                double dis=GetDis(pPos, tPos);
+                if (dis < 100.0)
+                {
+                    Program.client.PressKey(w, keyup);
+                    break;
+                }
+                double angle=Func.CalcAngle(pPos, tPos);
+                Program.client.ChangeAngle(angle);
+              //  ChangeToTargetAngle(pPos, tPos);
+                //按W
+                Thread.Sleep(200);
+            }
+        }
+        
         private void WorkThread()
         {
             while(bWorking)
@@ -27,7 +53,11 @@ namespace Controller
                 //血量少的话喝药
 
                 //如果离打怪点远,回来
-
+                double dis=GetDis(AttackBasePos, player.pos);
+                if(dis>20.0)
+                {
+                    MoveToPoint(AttackBasePos);
+                }
                 //获取怪物信息
            //     UpdateMonsterInfo();
                 //搜索怪物
@@ -216,9 +246,20 @@ namespace Controller
             int.TryParse(tb2.Text, out ctrl);
             Program.client.ClickKey(key,ctrl);
         }
+#region 路径采集器
+        private void btnStartGenPath_Click(object sender, EventArgs e)
+        {
 
-      
+        }
+        
 
+#endregion
+
+        private void btnGetPlayerPos_Click(object sender, EventArgs e)
+        {
+            tb1.Text="";
+            tb2.Text = "";
+        }
 
     }
 }
