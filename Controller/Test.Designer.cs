@@ -455,6 +455,7 @@
             this.btnUnloadDll.TabIndex = 10;
             this.btnUnloadDll.Text = "卸载DLL";
             this.btnUnloadDll.UseVisualStyleBackColor = true;
+            this.btnUnloadDll.Click += new System.EventHandler(this.btnUnloadDll_Click);
             // 
             // btnStartWork
             // 

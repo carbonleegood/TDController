@@ -394,6 +394,11 @@ namespace Controller
             tb4.Text = dis.ToString();
         }
 
+        private void btnUnloadDll_Click(object sender, EventArgs e)
+        {
+            Program.client.Test(1,1);
+        }
+
       
 
    
