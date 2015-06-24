@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
-
+using Thrift.GameCall;
 namespace Controller
 {
     public partial class Test : Form
@@ -18,53 +18,82 @@ namespace Controller
             InitializeComponent();
         }
         private bool bWorking = false;
-        int MoveToPoint(Pos tPos)
-        {
-            Pos pPos = getplayerpos();
+        //int MoveToPoint(Pos tPos)
+        //{
+        //    Pos pPos = getplayerpos();
 
-            double dis = GetDis(pPos, tPos);
-            if (dis < 100.0)
-                return 0;
-            Program.client.PressKey(w, keydown);
-            for (int i = 0; i < 20; ++i)
+        //    double dis = GetDis(pPos, tPos);
+        //    if (dis < 100.0)
+        //        return 0;
+        //    Program.client.PressKey(w, keydown);
+        //    for (int i = 0; i < 20; ++i)
+        //    {
+        //        //获取角色当前坐标
+        //        pPos = getplayerpos();
+        //        double dis=GetDis(pPos, tPos);
+        //        if (dis < 100.0)
+        //        {
+        //            Program.client.PressKey(w, keyup);
+        //            break;
+        //        }
+        //        double angle=Func.CalcAngle(pPos, tPos);
+        //        Program.client.ChangeAngle(angle);
+        //      //  ChangeToTargetAngle(pPos, tPos);
+        //        //按W
+        //        Thread.Sleep(200);
+        //    }
+        //}
+        MonsterInfo SearchNearestMonster(Pos pPos, List<MonsterInfo> monsterList)
+        {
+            MonsterInfo NearMonster = null;
+            // double dis = 1000.0;
+            double nearestDis = 1000.0;
+            foreach (var item in monsterList)
             {
-                //获取角色当前坐标
-                pPos = getplayerpos();
-                double dis=GetDis(pPos, tPos);
-                if (dis < 100.0)
+                if (item.HP < 1)
+                    continue;
+                double dis = Func.GetDis(pPos.X, pPos.Y, item.X, item.Y);
+                if (dis < nearestDis)
                 {
-                    Program.client.PressKey(w, keyup);
-                    break;
+                    NearMonster = item;
+                    nearestDis = dis;
                 }
-                double angle=Func.CalcAngle(pPos, tPos);
-                Program.client.ChangeAngle(angle);
-              //  ChangeToTargetAngle(pPos, tPos);
-                //按W
-                Thread.Sleep(200);
             }
+            return NearMonster;
         }
-        
         private void WorkThread()
         {
-            while(bWorking)
+            while (bWorking)
             {
                 //获取角色信息
-           //     UpdatePlayerInfo();
+                PlayerInfo player = Program.client.GetPlayerInfo();
+                Pos pPos = new Pos(player.X, player.Y);
+                //     UpdatePlayerInfo();
                 //血量少的话喝药
 
                 //如果离打怪点远,回来
-                double dis=GetDis(AttackBasePos, player.pos);
-                if(dis>20.0)
-                {
-                    MoveToPoint(AttackBasePos);
-                }
+
+
                 //获取怪物信息
-           //     UpdateMonsterInfo();
+                List<MonsterInfo> monsterlist = Program.client.GetMonsterList();
+                Pos tPos = new Pos();
+                MonsterInfo monster = SearchNearestMonster(pPos, monsterlist);
+                if (monster == null)
+                {
+                    Thread.Sleep(200);
+                    continue;
+                }
+
+                double angle = CalcAngle(pPos.X, pPos.Y, monster.X, monster.Y);
+                Program.client.ChangeAngle(angle);
+                Program.client.PressKey(49, 0);
+                Thread.Sleep(100);
+                //     UpdateMonsterInfo();
                 //搜索怪物
                 //5码内有怪物则攻击
 
                 //走到怪物处
-                
+
             }
         }
         private void btnStartWork_Click(object sender, EventArgs e)
@@ -82,27 +111,33 @@ namespace Controller
             bWorking = false;
             Thread.Sleep(500);
         }
-        double GetDis(Pos a,Pos b)
-        {
-            double x=Math.Abs(a.X-b.X);
-            double y=Math.Abs(a.Y-b.Y);
-            return Math.Sqrt(x * x + y * y);
-        }
-        double GetDir(Pos center,Pos end)
-        {
-            double temp1 = (end.Y - center.Y);
-            double temp2 = (end.X - center.X);
-            double dir = Math.Atan2(temp1, temp2);
-            if (dir < 0)
-                dir += 2 * 3.14159266;
-            return dir;
-        }
+        //double GetDis(double tx, double ty, double px, double py)
+        //{
+        //    double x = Math.Abs(tx - px);
+        //    double y = Math.Abs(ty - py);
+        //    return Math.Sqrt(x * x + y * y);
+        //}
+        //double GetDis(Pos a,Pos b)
+        //{
+        //    double x=Math.Abs(a.X-b.X);
+        //    double y=Math.Abs(a.Y-b.Y);
+        //    return Math.Sqrt(x * x + y * y);
+        //}
+        //double GetDir(Pos center,Pos end)
+        //{
+        //    double temp1 = (end.Y - center.Y);
+        //    double temp2 = (end.X - center.X);
+        //    double dir = Math.Atan2(temp1, temp2);
+        //    if (dir < 0)
+        //        dir += 2 * 3.14159266;
+        //    return dir;
+        //}
         Pos CalcAttackPos(Pos BasePos,Pos MonsterPos)
         {
             Pos Target=new Pos();
-            double dis = GetDis(BasePos, MonsterPos);
+            double dis = Func.GetDis(BasePos, MonsterPos);
             dis += 5;
-            double dir = GetDir(BasePos,MonsterPos);
+            double dir = Func.GetDir(BasePos, MonsterPos);
             double ylen =Math.Abs( Math.Sin(dir) * dis);
             double xlen = Math.Abs(Math.Cos(dir) * dis);
 
@@ -138,11 +173,103 @@ namespace Controller
         }
         private void btnGetPlayerInfo_Click(object sender, EventArgs e)
         {
-            Program.client.GetPlayerInfo();
+            PlayerInfo player = Program.client.GetPlayerInfo();
+            tb1.Text = player.X.ToString();
+            tb2.Text = player.Y.ToString();
+
+            sbyte[] bname = player.Name.ToArray();
+            byte[] bytes = new byte[bname.Length];
+            Buffer.BlockCopy(bname, 0, bytes, 0, bname.Length);
+            string strName = Encoding.Unicode.GetString(bytes);
+
+            lsResult.Items.Clear();
+            lsResult.Columns.Clear();
+            lsResult.Columns.Add("name");
+            lsResult.Columns.Add("Level");
+            lsResult.Columns.Add("HP");
+            lsResult.Columns.Add("MaxHP");
+            lsResult.Columns.Add("X");
+            lsResult.Columns.Add("Y");
+
+            var SubItem = lsResult.Items.Add(strName);
+            SubItem.SubItems.Add(player.Level.ToString());
+            SubItem.SubItems.Add(player.HP.ToString());
+            SubItem.SubItems.Add(player.MaxHP.ToString());
+
+            SubItem.SubItems.Add(player.X.ToString());
+            SubItem.SubItems.Add(player.Y.ToString());
+        }
+        private void btnGetPlayerPos_Click(object sender, EventArgs e)
+        {
+            PlayerInfo player = Program.client.GetPlayerInfo();
+            tb3.Text = player.X.ToString();
+            tb4.Text = player.Y.ToString();
         }
         private void btnMonsterList_Click(object sender, EventArgs e)
         {
-            Program.client.GetMonsterList();
+            List<MonsterInfo> monsterlist = Program.client.GetMonsterList();
+
+            lsResult.Items.Clear();
+            lsResult.Columns.Clear();
+            lsResult.Columns.Add("name");
+            lsResult.Columns.Add("Level");
+            lsResult.Columns.Add("HP");
+            lsResult.Columns.Add("友好");
+            lsResult.Columns.Add("X");
+            lsResult.Columns.Add("Y");
+
+            foreach (var item in monsterlist)
+            {
+                sbyte[] bname = item.Name.ToArray();
+                byte[] bytes = new byte[bname.Length];
+                Buffer.BlockCopy(bname, 0, bytes, 0, bname.Length);
+                string strName = Encoding.Unicode.GetString(bytes);
+                var SubItem = lsResult.Items.Add(strName);
+
+                SubItem.SubItems.Add(item.Level.ToString());
+                SubItem.SubItems.Add(item.HP.ToString());
+                SubItem.SubItems.Add(item.Frd.ToString());
+
+                SubItem.SubItems.Add(item.X.ToString());
+                SubItem.SubItems.Add(item.Y.ToString());
+            }
+        }
+        private void btnGetNearbyMonster_Click(object sender, EventArgs e)
+        {
+            PlayerInfo player = Program.client.GetPlayerInfo();
+            Pos pPos = new Pos(player.X, player.Y);
+
+            List<MonsterInfo> monsterlist = Program.client.GetMonsterList();
+
+            lsResult.Items.Clear();
+            lsResult.Columns.Clear();
+            lsResult.Columns.Add("name");
+            lsResult.Columns.Add("Level");
+            lsResult.Columns.Add("HP");
+            lsResult.Columns.Add("友好");
+            lsResult.Columns.Add("X");
+            lsResult.Columns.Add("Y");
+            Pos tPos = new Pos();
+            foreach (var item in monsterlist)
+            {
+                tPos.X = item.X;
+                tPos.Y = item.Y;
+                double dis = Func.GetDis(pPos, tPos);
+                if (dis > 1000.0)
+                    continue;
+                sbyte[] bname = item.Name.ToArray();
+                byte[] bytes = new byte[bname.Length];
+                Buffer.BlockCopy(bname, 0, bytes, 0, bname.Length);
+                string strName = Encoding.Unicode.GetString(bytes);
+                var SubItem = lsResult.Items.Add(strName);
+
+                SubItem.SubItems.Add(item.Level.ToString());
+                SubItem.SubItems.Add(item.HP.ToString());
+                SubItem.SubItems.Add(item.Frd.ToString());
+
+                SubItem.SubItems.Add(item.X.ToString());
+                SubItem.SubItems.Add(item.Y.ToString());
+            }
         }
 
         private void btnChangeAngle_Click(object sender, EventArgs e)
@@ -254,12 +381,24 @@ namespace Controller
         
 
 #endregion
-
-        private void btnGetPlayerPos_Click(object sender, EventArgs e)
+        private void btnCalcDis_Click(object sender, EventArgs e)
         {
-            tb1.Text="";
-            tb2.Text = "";
+            Pos a = new Pos();
+            Pos b = new Pos();
+            double.TryParse(tb1.Text, out a.X);
+            double.TryParse(tb2.Text, out a.Y);
+            double.TryParse(tb3.Text, out b.X);
+            double.TryParse(tb4.Text, out b.Y);
+
+            double dis = Func.GetDis(a, b);
+            tb4.Text = dis.ToString();
         }
+
+      
+
+   
+
+ 
 
     }
 }

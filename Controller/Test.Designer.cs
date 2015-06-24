@@ -35,6 +35,10 @@
             this.tb4 = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.btnCalcDis = new System.Windows.Forms.Button();
+            this.btnGetNearbyMonster = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.btnGetPlayerPos = new System.Windows.Forms.Button();
             this.btnGetSkillList = new System.Windows.Forms.Button();
             this.btnGetPlayerInfo = new System.Windows.Forms.Button();
             this.btnMonsterList = new System.Windows.Forms.Button();
@@ -49,6 +53,13 @@
             this.btnPressKey = new System.Windows.Forms.Button();
             this.btnRCSlot = new System.Windows.Forms.Button();
             this.btnLCSlot = new System.Windows.Forms.Button();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.lbPath = new System.Windows.Forms.ListBox();
+            this.btnDelPoint = new System.Windows.Forms.Button();
+            this.btnLoadPath = new System.Windows.Forms.Button();
+            this.btnSavePath = new System.Windows.Forms.Button();
+            this.btnStopGenPath = new System.Windows.Forms.Button();
+            this.btnStartGenPath = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -57,14 +68,6 @@
             this.btnUnloadDll = new System.Windows.Forms.Button();
             this.btnStartWork = new System.Windows.Forms.Button();
             this.btnStopWork = new System.Windows.Forms.Button();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.btnStartGenPath = new System.Windows.Forms.Button();
-            this.btnStopGenPath = new System.Windows.Forms.Button();
-            this.btnSavePath = new System.Windows.Forms.Button();
-            this.btnLoadPath = new System.Windows.Forms.Button();
-            this.btnDelPoint = new System.Windows.Forms.Button();
-            this.lbPath = new System.Windows.Forms.ListBox();
-            this.btnGetPlayerPos = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -125,6 +128,9 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.btnCalcDis);
+            this.tabPage1.Controls.Add(this.btnGetNearbyMonster);
+            this.tabPage1.Controls.Add(this.button2);
             this.tabPage1.Controls.Add(this.btnGetPlayerPos);
             this.tabPage1.Controls.Add(this.btnGetSkillList);
             this.tabPage1.Controls.Add(this.btnGetPlayerInfo);
@@ -136,6 +142,45 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "获取信息";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // btnCalcDis
+            // 
+            this.btnCalcDis.Location = new System.Drawing.Point(17, 103);
+            this.btnCalcDis.Name = "btnCalcDis";
+            this.btnCalcDis.Size = new System.Drawing.Size(75, 23);
+            this.btnCalcDis.TabIndex = 9;
+            this.btnCalcDis.Text = "计算距离";
+            this.btnCalcDis.UseVisualStyleBackColor = true;
+            this.btnCalcDis.Click += new System.EventHandler(this.btnCalcDis_Click);
+            // 
+            // btnGetNearbyMonster
+            // 
+            this.btnGetNearbyMonster.Location = new System.Drawing.Point(109, 44);
+            this.btnGetNearbyMonster.Name = "btnGetNearbyMonster";
+            this.btnGetNearbyMonster.Size = new System.Drawing.Size(75, 23);
+            this.btnGetNearbyMonster.TabIndex = 8;
+            this.btnGetNearbyMonster.Text = "范围内怪物";
+            this.btnGetNearbyMonster.UseVisualStyleBackColor = true;
+            this.btnGetNearbyMonster.Click += new System.EventHandler(this.btnGetNearbyMonster_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(219, 12);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 7;
+            this.button2.Text = "角色位置";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // btnGetPlayerPos
+            // 
+            this.btnGetPlayerPos.Location = new System.Drawing.Point(109, 11);
+            this.btnGetPlayerPos.Name = "btnGetPlayerPos";
+            this.btnGetPlayerPos.Size = new System.Drawing.Size(86, 23);
+            this.btnGetPlayerPos.TabIndex = 4;
+            this.btnGetPlayerPos.Text = "获取角色位置";
+            this.btnGetPlayerPos.UseVisualStyleBackColor = true;
+            this.btnGetPlayerPos.Click += new System.EventHandler(this.btnGetPlayerPos_Click);
             // 
             // btnGetSkillList
             // 
@@ -285,6 +330,77 @@
             this.btnLCSlot.UseVisualStyleBackColor = true;
             this.btnLCSlot.Click += new System.EventHandler(this.btnLCSlot_Click);
             // 
+            // tabPage5
+            // 
+            this.tabPage5.Controls.Add(this.lbPath);
+            this.tabPage5.Controls.Add(this.btnDelPoint);
+            this.tabPage5.Controls.Add(this.btnLoadPath);
+            this.tabPage5.Controls.Add(this.btnSavePath);
+            this.tabPage5.Controls.Add(this.btnStopGenPath);
+            this.tabPage5.Controls.Add(this.btnStartGenPath);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage5.Size = new System.Drawing.Size(321, 311);
+            this.tabPage5.TabIndex = 4;
+            this.tabPage5.Text = "路径采集器";
+            this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // lbPath
+            // 
+            this.lbPath.FormattingEnabled = true;
+            this.lbPath.ItemHeight = 12;
+            this.lbPath.Location = new System.Drawing.Point(139, 32);
+            this.lbPath.Name = "lbPath";
+            this.lbPath.Size = new System.Drawing.Size(165, 256);
+            this.lbPath.TabIndex = 5;
+            // 
+            // btnDelPoint
+            // 
+            this.btnDelPoint.Location = new System.Drawing.Point(6, 186);
+            this.btnDelPoint.Name = "btnDelPoint";
+            this.btnDelPoint.Size = new System.Drawing.Size(75, 23);
+            this.btnDelPoint.TabIndex = 4;
+            this.btnDelPoint.Text = "删除点";
+            this.btnDelPoint.UseVisualStyleBackColor = true;
+            // 
+            // btnLoadPath
+            // 
+            this.btnLoadPath.Location = new System.Drawing.Point(6, 147);
+            this.btnLoadPath.Name = "btnLoadPath";
+            this.btnLoadPath.Size = new System.Drawing.Size(75, 23);
+            this.btnLoadPath.TabIndex = 3;
+            this.btnLoadPath.Text = "加载路径";
+            this.btnLoadPath.UseVisualStyleBackColor = true;
+            // 
+            // btnSavePath
+            // 
+            this.btnSavePath.Location = new System.Drawing.Point(6, 109);
+            this.btnSavePath.Name = "btnSavePath";
+            this.btnSavePath.Size = new System.Drawing.Size(75, 23);
+            this.btnSavePath.TabIndex = 2;
+            this.btnSavePath.Text = "保存路径";
+            this.btnSavePath.UseVisualStyleBackColor = true;
+            // 
+            // btnStopGenPath
+            // 
+            this.btnStopGenPath.Location = new System.Drawing.Point(6, 69);
+            this.btnStopGenPath.Name = "btnStopGenPath";
+            this.btnStopGenPath.Size = new System.Drawing.Size(75, 23);
+            this.btnStopGenPath.TabIndex = 1;
+            this.btnStopGenPath.Text = "停止采集";
+            this.btnStopGenPath.UseVisualStyleBackColor = true;
+            // 
+            // btnStartGenPath
+            // 
+            this.btnStartGenPath.Location = new System.Drawing.Point(6, 32);
+            this.btnStartGenPath.Name = "btnStartGenPath";
+            this.btnStartGenPath.Size = new System.Drawing.Size(75, 23);
+            this.btnStartGenPath.TabIndex = 0;
+            this.btnStartGenPath.Text = "开始采集";
+            this.btnStartGenPath.UseVisualStyleBackColor = true;
+            this.btnStartGenPath.Click += new System.EventHandler(this.btnStartGenPath_Click);
+            // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(376, 15);
@@ -360,87 +476,6 @@
             this.btnStopWork.UseVisualStyleBackColor = true;
             this.btnStopWork.Click += new System.EventHandler(this.btnStopWork_Click);
             // 
-            // tabPage5
-            // 
-            this.tabPage5.Controls.Add(this.lbPath);
-            this.tabPage5.Controls.Add(this.btnDelPoint);
-            this.tabPage5.Controls.Add(this.btnLoadPath);
-            this.tabPage5.Controls.Add(this.btnSavePath);
-            this.tabPage5.Controls.Add(this.btnStopGenPath);
-            this.tabPage5.Controls.Add(this.btnStartGenPath);
-            this.tabPage5.Location = new System.Drawing.Point(4, 22);
-            this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(321, 311);
-            this.tabPage5.TabIndex = 4;
-            this.tabPage5.Text = "路径采集器";
-            this.tabPage5.UseVisualStyleBackColor = true;
-            // 
-            // btnStartGenPath
-            // 
-            this.btnStartGenPath.Location = new System.Drawing.Point(6, 32);
-            this.btnStartGenPath.Name = "btnStartGenPath";
-            this.btnStartGenPath.Size = new System.Drawing.Size(75, 23);
-            this.btnStartGenPath.TabIndex = 0;
-            this.btnStartGenPath.Text = "开始采集";
-            this.btnStartGenPath.UseVisualStyleBackColor = true;
-            this.btnStartGenPath.Click += new System.EventHandler(this.btnStartGenPath_Click);
-            // 
-            // btnStopGenPath
-            // 
-            this.btnStopGenPath.Location = new System.Drawing.Point(6, 69);
-            this.btnStopGenPath.Name = "btnStopGenPath";
-            this.btnStopGenPath.Size = new System.Drawing.Size(75, 23);
-            this.btnStopGenPath.TabIndex = 1;
-            this.btnStopGenPath.Text = "停止采集";
-            this.btnStopGenPath.UseVisualStyleBackColor = true;
-            // 
-            // btnSavePath
-            // 
-            this.btnSavePath.Location = new System.Drawing.Point(6, 109);
-            this.btnSavePath.Name = "btnSavePath";
-            this.btnSavePath.Size = new System.Drawing.Size(75, 23);
-            this.btnSavePath.TabIndex = 2;
-            this.btnSavePath.Text = "保存路径";
-            this.btnSavePath.UseVisualStyleBackColor = true;
-            // 
-            // btnLoadPath
-            // 
-            this.btnLoadPath.Location = new System.Drawing.Point(6, 147);
-            this.btnLoadPath.Name = "btnLoadPath";
-            this.btnLoadPath.Size = new System.Drawing.Size(75, 23);
-            this.btnLoadPath.TabIndex = 3;
-            this.btnLoadPath.Text = "加载路径";
-            this.btnLoadPath.UseVisualStyleBackColor = true;
-            // 
-            // btnDelPoint
-            // 
-            this.btnDelPoint.Location = new System.Drawing.Point(6, 186);
-            this.btnDelPoint.Name = "btnDelPoint";
-            this.btnDelPoint.Size = new System.Drawing.Size(75, 23);
-            this.btnDelPoint.TabIndex = 4;
-            this.btnDelPoint.Text = "删除点";
-            this.btnDelPoint.UseVisualStyleBackColor = true;
-            // 
-            // lbPath
-            // 
-            this.lbPath.FormattingEnabled = true;
-            this.lbPath.ItemHeight = 12;
-            this.lbPath.Location = new System.Drawing.Point(139, 32);
-            this.lbPath.Name = "lbPath";
-            this.lbPath.Size = new System.Drawing.Size(165, 256);
-            this.lbPath.TabIndex = 5;
-            // 
-            // btnGetPlayerPos
-            // 
-            this.btnGetPlayerPos.Location = new System.Drawing.Point(109, 12);
-            this.btnGetPlayerPos.Name = "btnGetPlayerPos";
-            this.btnGetPlayerPos.Size = new System.Drawing.Size(86, 23);
-            this.btnGetPlayerPos.TabIndex = 4;
-            this.btnGetPlayerPos.Text = "获取角色位置";
-            this.btnGetPlayerPos.UseVisualStyleBackColor = true;
-            this.btnGetPlayerPos.Click += new System.EventHandler(this.btnGetPlayerPos_Click);
-            // 
             // Test
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -512,6 +547,9 @@
         private System.Windows.Forms.Button btnStopGenPath;
         private System.Windows.Forms.Button btnStartGenPath;
         private System.Windows.Forms.Button btnGetPlayerPos;
+        private System.Windows.Forms.Button btnCalcDis;
+        private System.Windows.Forms.Button btnGetNearbyMonster;
+        private System.Windows.Forms.Button button2;
     }
 }
 

@@ -31,5 +31,26 @@ namespace Controller
                 angle = 7.8539816 - angle;
             return angle;
         }
+        public static double GetDis(double tx, double ty, double px, double py)
+        {
+            double x = Math.Abs(tx - px);
+            double y = Math.Abs(ty - py);
+            return Math.Sqrt(x * x + y * y);
+        }
+        public static double GetDis(Pos a, Pos b)
+        {
+            double x = Math.Abs(a.X - b.X);
+            double y = Math.Abs(a.Y - b.Y);
+            return Math.Sqrt(x * x + y * y);
+        }
+        public static double GetDir(Pos center, Pos end)
+        {
+            double temp1 = (end.Y - center.Y);
+            double temp2 = (end.X - center.X);
+            double dir = Math.Atan2(temp1, temp2);
+            if (dir < 0)
+                dir += 2 * 3.14159266;
+            return dir;
+        }
     }
 }
