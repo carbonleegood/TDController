@@ -64,10 +64,10 @@ namespace Thrift.GameCall
       IAsyncResult Begin_GetMonsterList(AsyncCallback callback, object state);
       List<MonsterInfo> End_GetMonsterList(IAsyncResult asyncResult);
       #endif
-      List<SkillInfo> GetPanelSkillInfo();
+      List<int> GetSkillReleaseInfo();
       #if SILVERLIGHT
-      IAsyncResult Begin_GetPanelSkillInfo(AsyncCallback callback, object state);
-      List<SkillInfo> End_GetPanelSkillInfo(IAsyncResult asyncResult);
+      IAsyncResult Begin_GetSkillReleaseInfo(AsyncCallback callback, object state);
+      List<int> End_GetSkillReleaseInfo(IAsyncResult asyncResult);
       #endif
       List<SkillInfo> GetLearnedSkillInfo();
       #if SILVERLIGHT
@@ -78,6 +78,11 @@ namespace Thrift.GameCall
       #if SILVERLIGHT
       IAsyncResult Begin_GetSlotSkillInfo(AsyncCallback callback, object state);
       List<SlotSkillInfo> End_GetSlotSkillInfo(IAsyncResult asyncResult);
+      #endif
+      void GetSkillInfo();
+      #if SILVERLIGHT
+      IAsyncResult Begin_GetSkillInfo(AsyncCallback callback, object state);
+      void End_GetSkillInfo(IAsyncResult asyncResult);
       #endif
       void ChangeAngle(double angle);
       #if SILVERLIGHT
@@ -736,39 +741,39 @@ namespace Thrift.GameCall
 
       
       #if SILVERLIGHT
-      public IAsyncResult Begin_GetPanelSkillInfo(AsyncCallback callback, object state)
+      public IAsyncResult Begin_GetSkillReleaseInfo(AsyncCallback callback, object state)
       {
-        return send_GetPanelSkillInfo(callback, state);
+        return send_GetSkillReleaseInfo(callback, state);
       }
 
-      public List<SkillInfo> End_GetPanelSkillInfo(IAsyncResult asyncResult)
+      public List<int> End_GetSkillReleaseInfo(IAsyncResult asyncResult)
       {
         oprot_.Transport.EndFlush(asyncResult);
-        return recv_GetPanelSkillInfo();
+        return recv_GetSkillReleaseInfo();
       }
 
       #endif
 
-      public List<SkillInfo> GetPanelSkillInfo()
+      public List<int> GetSkillReleaseInfo()
       {
         #if !SILVERLIGHT
-        send_GetPanelSkillInfo();
-        return recv_GetPanelSkillInfo();
+        send_GetSkillReleaseInfo();
+        return recv_GetSkillReleaseInfo();
 
         #else
-        var asyncResult = Begin_GetPanelSkillInfo(null, null);
-        return End_GetPanelSkillInfo(asyncResult);
+        var asyncResult = Begin_GetSkillReleaseInfo(null, null);
+        return End_GetSkillReleaseInfo(asyncResult);
 
         #endif
       }
       #if SILVERLIGHT
-      public IAsyncResult send_GetPanelSkillInfo(AsyncCallback callback, object state)
+      public IAsyncResult send_GetSkillReleaseInfo(AsyncCallback callback, object state)
       #else
-      public void send_GetPanelSkillInfo()
+      public void send_GetSkillReleaseInfo()
       #endif
       {
-        oprot_.WriteMessageBegin(new TMessage("GetPanelSkillInfo", TMessageType.Call, seqid_));
-        GetPanelSkillInfo_args args = new GetPanelSkillInfo_args();
+        oprot_.WriteMessageBegin(new TMessage("GetSkillReleaseInfo", TMessageType.Call, seqid_));
+        GetSkillReleaseInfo_args args = new GetSkillReleaseInfo_args();
         args.Write(oprot_);
         oprot_.WriteMessageEnd();
         #if SILVERLIGHT
@@ -778,7 +783,7 @@ namespace Thrift.GameCall
         #endif
       }
 
-      public List<SkillInfo> recv_GetPanelSkillInfo()
+      public List<int> recv_GetSkillReleaseInfo()
       {
         TMessage msg = iprot_.ReadMessageBegin();
         if (msg.Type == TMessageType.Exception) {
@@ -786,13 +791,13 @@ namespace Thrift.GameCall
           iprot_.ReadMessageEnd();
           throw x;
         }
-        GetPanelSkillInfo_result result = new GetPanelSkillInfo_result();
+        GetSkillReleaseInfo_result result = new GetSkillReleaseInfo_result();
         result.Read(iprot_);
         iprot_.ReadMessageEnd();
         if (result.__isset.success) {
           return result.Success;
         }
-        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "GetPanelSkillInfo failed: unknown result");
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "GetSkillReleaseInfo failed: unknown result");
       }
 
       
@@ -915,6 +920,64 @@ namespace Thrift.GameCall
           return result.Success;
         }
         throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "GetSlotSkillInfo failed: unknown result");
+      }
+
+      
+      #if SILVERLIGHT
+      public IAsyncResult Begin_GetSkillInfo(AsyncCallback callback, object state)
+      {
+        return send_GetSkillInfo(callback, state);
+      }
+
+      public void End_GetSkillInfo(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        recv_GetSkillInfo();
+      }
+
+      #endif
+
+      public void GetSkillInfo()
+      {
+        #if !SILVERLIGHT
+        send_GetSkillInfo();
+        recv_GetSkillInfo();
+
+        #else
+        var asyncResult = Begin_GetSkillInfo(null, null);
+        End_GetSkillInfo(asyncResult);
+
+        #endif
+      }
+      #if SILVERLIGHT
+      public IAsyncResult send_GetSkillInfo(AsyncCallback callback, object state)
+      #else
+      public void send_GetSkillInfo()
+      #endif
+      {
+        oprot_.WriteMessageBegin(new TMessage("GetSkillInfo", TMessageType.Call, seqid_));
+        GetSkillInfo_args args = new GetSkillInfo_args();
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        #if SILVERLIGHT
+        return oprot_.Transport.BeginFlush(callback, state);
+        #else
+        oprot_.Transport.Flush();
+        #endif
+      }
+
+      public void recv_GetSkillInfo()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        GetSkillInfo_result result = new GetSkillInfo_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        return;
       }
 
       
@@ -1428,9 +1491,10 @@ namespace Thrift.GameCall
         processMap_["GetPlayerInfo"] = GetPlayerInfo_Process;
         processMap_["GetPlayerPos"] = GetPlayerPos_Process;
         processMap_["GetMonsterList"] = GetMonsterList_Process;
-        processMap_["GetPanelSkillInfo"] = GetPanelSkillInfo_Process;
+        processMap_["GetSkillReleaseInfo"] = GetSkillReleaseInfo_Process;
         processMap_["GetLearnedSkillInfo"] = GetLearnedSkillInfo_Process;
         processMap_["GetSlotSkillInfo"] = GetSlotSkillInfo_Process;
+        processMap_["GetSkillInfo"] = GetSkillInfo_Process;
         processMap_["ChangeAngle"] = ChangeAngle_Process;
         processMap_["FindPath"] = FindPath_Process;
         processMap_["PressKey"] = PressKey_Process;
@@ -1588,14 +1652,14 @@ namespace Thrift.GameCall
         oprot.Transport.Flush();
       }
 
-      public void GetPanelSkillInfo_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      public void GetSkillReleaseInfo_Process(int seqid, TProtocol iprot, TProtocol oprot)
       {
-        GetPanelSkillInfo_args args = new GetPanelSkillInfo_args();
+        GetSkillReleaseInfo_args args = new GetSkillReleaseInfo_args();
         args.Read(iprot);
         iprot.ReadMessageEnd();
-        GetPanelSkillInfo_result result = new GetPanelSkillInfo_result();
-        result.Success = iface_.GetPanelSkillInfo();
-        oprot.WriteMessageBegin(new TMessage("GetPanelSkillInfo", TMessageType.Reply, seqid)); 
+        GetSkillReleaseInfo_result result = new GetSkillReleaseInfo_result();
+        result.Success = iface_.GetSkillReleaseInfo();
+        oprot.WriteMessageBegin(new TMessage("GetSkillReleaseInfo", TMessageType.Reply, seqid)); 
         result.Write(oprot);
         oprot.WriteMessageEnd();
         oprot.Transport.Flush();
@@ -1622,6 +1686,19 @@ namespace Thrift.GameCall
         GetSlotSkillInfo_result result = new GetSlotSkillInfo_result();
         result.Success = iface_.GetSlotSkillInfo();
         oprot.WriteMessageBegin(new TMessage("GetSlotSkillInfo", TMessageType.Reply, seqid)); 
+        result.Write(oprot);
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void GetSkillInfo_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        GetSkillInfo_args args = new GetSkillInfo_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        GetSkillInfo_result result = new GetSkillInfo_result();
+        iface_.GetSkillInfo();
+        oprot.WriteMessageBegin(new TMessage("GetSkillInfo", TMessageType.Reply, seqid)); 
         result.Write(oprot);
         oprot.WriteMessageEnd();
         oprot.Transport.Flush();
@@ -3325,10 +3402,10 @@ namespace Thrift.GameCall
     #if !SILVERLIGHT
     [Serializable]
     #endif
-    public partial class GetPanelSkillInfo_args : TBase
+    public partial class GetSkillReleaseInfo_args : TBase
     {
 
-      public GetPanelSkillInfo_args() {
+      public GetSkillReleaseInfo_args() {
       }
 
       public void Read (TProtocol iprot)
@@ -3353,14 +3430,14 @@ namespace Thrift.GameCall
       }
 
       public void Write(TProtocol oprot) {
-        TStruct struc = new TStruct("GetPanelSkillInfo_args");
+        TStruct struc = new TStruct("GetSkillReleaseInfo_args");
         oprot.WriteStructBegin(struc);
         oprot.WriteFieldStop();
         oprot.WriteStructEnd();
       }
 
       public override string ToString() {
-        StringBuilder sb = new StringBuilder("GetPanelSkillInfo_args(");
+        StringBuilder sb = new StringBuilder("GetSkillReleaseInfo_args(");
         sb.Append(")");
         return sb.ToString();
       }
@@ -3371,11 +3448,11 @@ namespace Thrift.GameCall
     #if !SILVERLIGHT
     [Serializable]
     #endif
-    public partial class GetPanelSkillInfo_result : TBase
+    public partial class GetSkillReleaseInfo_result : TBase
     {
-      private List<SkillInfo> _success;
+      private List<int> _success;
 
-      public List<SkillInfo> Success
+      public List<int> Success
       {
         get
         {
@@ -3397,7 +3474,7 @@ namespace Thrift.GameCall
         public bool success;
       }
 
-      public GetPanelSkillInfo_result() {
+      public GetSkillReleaseInfo_result() {
       }
 
       public void Read (TProtocol iprot)
@@ -3415,13 +3492,12 @@ namespace Thrift.GameCall
             case 0:
               if (field.Type == TType.List) {
                 {
-                  Success = new List<SkillInfo>();
+                  Success = new List<int>();
                   TList _list20 = iprot.ReadListBegin();
                   for( int _i21 = 0; _i21 < _list20.Count; ++_i21)
                   {
-                    SkillInfo _elem22 = new SkillInfo();
-                    _elem22 = new SkillInfo();
-                    _elem22.Read(iprot);
+                    int _elem22 = 0;
+                    _elem22 = iprot.ReadI32();
                     Success.Add(_elem22);
                   }
                   iprot.ReadListEnd();
@@ -3440,7 +3516,7 @@ namespace Thrift.GameCall
       }
 
       public void Write(TProtocol oprot) {
-        TStruct struc = new TStruct("GetPanelSkillInfo_result");
+        TStruct struc = new TStruct("GetSkillReleaseInfo_result");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
 
@@ -3451,10 +3527,10 @@ namespace Thrift.GameCall
             field.ID = 0;
             oprot.WriteFieldBegin(field);
             {
-              oprot.WriteListBegin(new TList(TType.Struct, Success.Count));
-              foreach (SkillInfo _iter23 in Success)
+              oprot.WriteListBegin(new TList(TType.I32, Success.Count));
+              foreach (int _iter23 in Success)
               {
-                _iter23.Write(oprot);
+                oprot.WriteI32(_iter23);
               }
               oprot.WriteListEnd();
             }
@@ -3466,7 +3542,7 @@ namespace Thrift.GameCall
       }
 
       public override string ToString() {
-        StringBuilder sb = new StringBuilder("GetPanelSkillInfo_result(");
+        StringBuilder sb = new StringBuilder("GetSkillReleaseInfo_result(");
         sb.Append("Success: ");
         sb.Append(Success);
         sb.Append(")");
@@ -3777,6 +3853,99 @@ namespace Thrift.GameCall
         StringBuilder sb = new StringBuilder("GetSlotSkillInfo_result(");
         sb.Append("Success: ");
         sb.Append(Success);
+        sb.Append(")");
+        return sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class GetSkillInfo_args : TBase
+    {
+
+      public GetSkillInfo_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+
+      public void Write(TProtocol oprot) {
+        TStruct struc = new TStruct("GetSkillInfo_args");
+        oprot.WriteStructBegin(struc);
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+
+      public override string ToString() {
+        StringBuilder sb = new StringBuilder("GetSkillInfo_args(");
+        sb.Append(")");
+        return sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class GetSkillInfo_result : TBase
+    {
+
+      public GetSkillInfo_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+
+      public void Write(TProtocol oprot) {
+        TStruct struc = new TStruct("GetSkillInfo_result");
+        oprot.WriteStructBegin(struc);
+
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+
+      public override string ToString() {
+        StringBuilder sb = new StringBuilder("GetSkillInfo_result(");
         sb.Append(")");
         return sb.ToString();
       }
