@@ -339,7 +339,55 @@ namespace Controller
 
         private void btnGetSkillList_Click(object sender, EventArgs e)
         {
-            Program.client.GetSkillInfo();
+            Program.client.GetSlotSkillInfo();
+        }
+        private void btnPanelSkillInfo_Click(object sender, EventArgs e)
+        {
+            List<SlotSkillInfo> skilllist = Program.client.GetSlotSkillInfo();
+
+            lsResult.Items.Clear();
+            lsResult.Columns.Clear();
+            lsResult.Columns.Add("name");
+            lsResult.Columns.Add("ID");
+            lsResult.Columns.Add("可释放");
+            lsResult.Columns.Add("容器地址");
+            Pos tPos = new Pos();
+            foreach (var item in skilllist)
+            {
+                sbyte[] bname = item.Name.ToArray();
+                byte[] bytes = new byte[bname.Length];
+                Buffer.BlockCopy(bname, 0, bytes, 0, bname.Length);
+                string strName = Encoding.Unicode.GetString(bytes);
+                var SubItem = lsResult.Items.Add(strName);
+
+                SubItem.SubItems.Add(item.SkillID.ToString());
+                SubItem.SubItems.Add(item.CanRelease.ToString());
+                SubItem.SubItems.Add(item.SlotAddr.ToString());
+
+            }
+        }
+
+        private void btnLearnedSkill_Click(object sender, EventArgs e)
+        {
+            List<SkillInfo> skilllist = Program.client.GetLearnedSkillInfo();
+
+            lsResult.Items.Clear();
+            lsResult.Columns.Clear();
+            lsResult.Columns.Add("name");
+            lsResult.Columns.Add("ID");
+            lsResult.Columns.Add("可释放");
+            Pos tPos = new Pos();
+            foreach (var item in skilllist)
+            {
+                sbyte[] bname = item.Name.ToArray();
+                byte[] bytes = new byte[bname.Length];
+                Buffer.BlockCopy(bname, 0, bytes, 0, bname.Length);
+                string strName = Encoding.Unicode.GetString(bytes);
+                var SubItem = lsResult.Items.Add(strName);
+
+                SubItem.SubItems.Add(item.SkillID.ToString());
+                SubItem.SubItems.Add(item.CanRelease.ToString());
+            }
         }
 
         private void btnLCSlot_Click(object sender, EventArgs e)
@@ -396,14 +444,7 @@ namespace Controller
 
         private void btnUnloadDll_Click(object sender, EventArgs e)
         {
-            Program.client.Test(1,1);
+            Program.client.UnloadDll();
         }
-
-      
-
-   
-
- 
-
     }
 }

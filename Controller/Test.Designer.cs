@@ -35,9 +35,10 @@
             this.tb4 = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.btnPanelSkillInfo = new System.Windows.Forms.Button();
+            this.btnLearnedSkill = new System.Windows.Forms.Button();
             this.btnCalcDis = new System.Windows.Forms.Button();
             this.btnGetNearbyMonster = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.btnGetPlayerPos = new System.Windows.Forms.Button();
             this.btnGetSkillList = new System.Windows.Forms.Button();
             this.btnGetPlayerInfo = new System.Windows.Forms.Button();
@@ -49,6 +50,8 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.btnEnterGame = new System.Windows.Forms.Button();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.btnMoveSkill = new System.Windows.Forms.Button();
+            this.btnSkillKey = new System.Windows.Forms.Button();
             this.btnClickKey = new System.Windows.Forms.Button();
             this.btnPressKey = new System.Windows.Forms.Button();
             this.btnRCSlot = new System.Windows.Forms.Button();
@@ -128,9 +131,10 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.btnPanelSkillInfo);
+            this.tabPage1.Controls.Add(this.btnLearnedSkill);
             this.tabPage1.Controls.Add(this.btnCalcDis);
             this.tabPage1.Controls.Add(this.btnGetNearbyMonster);
-            this.tabPage1.Controls.Add(this.button2);
             this.tabPage1.Controls.Add(this.btnGetPlayerPos);
             this.tabPage1.Controls.Add(this.btnGetSkillList);
             this.tabPage1.Controls.Add(this.btnGetPlayerInfo);
@@ -142,6 +146,26 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "获取信息";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // btnPanelSkillInfo
+            // 
+            this.btnPanelSkillInfo.Location = new System.Drawing.Point(109, 74);
+            this.btnPanelSkillInfo.Name = "btnPanelSkillInfo";
+            this.btnPanelSkillInfo.Size = new System.Drawing.Size(75, 23);
+            this.btnPanelSkillInfo.TabIndex = 11;
+            this.btnPanelSkillInfo.Text = "面板技能";
+            this.btnPanelSkillInfo.UseVisualStyleBackColor = true;
+            this.btnPanelSkillInfo.Click += new System.EventHandler(this.btnPanelSkillInfo_Click);
+            // 
+            // btnLearnedSkill
+            // 
+            this.btnLearnedSkill.Location = new System.Drawing.Point(202, 74);
+            this.btnLearnedSkill.Name = "btnLearnedSkill";
+            this.btnLearnedSkill.Size = new System.Drawing.Size(75, 23);
+            this.btnLearnedSkill.TabIndex = 10;
+            this.btnLearnedSkill.Text = "已学技能";
+            this.btnLearnedSkill.UseVisualStyleBackColor = true;
+            this.btnLearnedSkill.Click += new System.EventHandler(this.btnLearnedSkill_Click);
             // 
             // btnCalcDis
             // 
@@ -163,18 +187,9 @@
             this.btnGetNearbyMonster.UseVisualStyleBackColor = true;
             this.btnGetNearbyMonster.Click += new System.EventHandler(this.btnGetNearbyMonster_Click);
             // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(219, 12);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 7;
-            this.button2.Text = "角色位置";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
             // btnGetPlayerPos
             // 
-            this.btnGetPlayerPos.Location = new System.Drawing.Point(109, 11);
+            this.btnGetPlayerPos.Location = new System.Drawing.Point(109, 12);
             this.btnGetPlayerPos.Name = "btnGetPlayerPos";
             this.btnGetPlayerPos.Size = new System.Drawing.Size(86, 23);
             this.btnGetPlayerPos.TabIndex = 4;
@@ -278,6 +293,8 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.btnMoveSkill);
+            this.tabPage4.Controls.Add(this.btnSkillKey);
             this.tabPage4.Controls.Add(this.btnClickKey);
             this.tabPage4.Controls.Add(this.btnPressKey);
             this.tabPage4.Controls.Add(this.btnRCSlot);
@@ -289,6 +306,24 @@
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "操作";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // btnMoveSkill
+            // 
+            this.btnMoveSkill.Location = new System.Drawing.Point(100, 74);
+            this.btnMoveSkill.Name = "btnMoveSkill";
+            this.btnMoveSkill.Size = new System.Drawing.Size(92, 23);
+            this.btnMoveSkill.TabIndex = 5;
+            this.btnMoveSkill.Text = "移动技能到槽";
+            this.btnMoveSkill.UseVisualStyleBackColor = true;
+            // 
+            // btnSkillKey
+            // 
+            this.btnSkillKey.Location = new System.Drawing.Point(19, 74);
+            this.btnSkillKey.Name = "btnSkillKey";
+            this.btnSkillKey.Size = new System.Drawing.Size(75, 23);
+            this.btnSkillKey.TabIndex = 4;
+            this.btnSkillKey.Text = "技能按键";
+            this.btnSkillKey.UseVisualStyleBackColor = true;
             // 
             // btnClickKey
             // 
@@ -550,7 +585,10 @@
         private System.Windows.Forms.Button btnGetPlayerPos;
         private System.Windows.Forms.Button btnCalcDis;
         private System.Windows.Forms.Button btnGetNearbyMonster;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnMoveSkill;
+        private System.Windows.Forms.Button btnSkillKey;
+        private System.Windows.Forms.Button btnPanelSkillInfo;
+        private System.Windows.Forms.Button btnLearnedSkill;
     }
 }
 

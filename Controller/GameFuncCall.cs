@@ -24,6 +24,26 @@ namespace Thrift.GameCall
       IAsyncResult Begin_Test(AsyncCallback callback, object state, int p1, double p2);
       int End_Test(IAsyncResult asyncResult);
       #endif
+      int Test2(int p1, int p2);
+      #if SILVERLIGHT
+      IAsyncResult Begin_Test2(AsyncCallback callback, object state, int p1, int p2);
+      int End_Test2(IAsyncResult asyncResult);
+      #endif
+      int Test3(double p1, double p2);
+      #if SILVERLIGHT
+      IAsyncResult Begin_Test3(AsyncCallback callback, object state, double p1, double p2);
+      int End_Test3(IAsyncResult asyncResult);
+      #endif
+      int Test4(int p1, int p2, int p3, int p4);
+      #if SILVERLIGHT
+      IAsyncResult Begin_Test4(AsyncCallback callback, object state, int p1, int p2, int p3, int p4);
+      int End_Test4(IAsyncResult asyncResult);
+      #endif
+      int UnloadDll();
+      #if SILVERLIGHT
+      IAsyncResult Begin_UnloadDll(AsyncCallback callback, object state);
+      int End_UnloadDll(IAsyncResult asyncResult);
+      #endif
       void EnterGame(int Index);
       #if SILVERLIGHT
       IAsyncResult Begin_EnterGame(AsyncCallback callback, object state, int Index);
@@ -34,15 +54,30 @@ namespace Thrift.GameCall
       IAsyncResult Begin_GetPlayerInfo(AsyncCallback callback, object state);
       PlayerInfo End_GetPlayerInfo(IAsyncResult asyncResult);
       #endif
+      PosInfo GetPlayerPos();
+      #if SILVERLIGHT
+      IAsyncResult Begin_GetPlayerPos(AsyncCallback callback, object state);
+      PosInfo End_GetPlayerPos(IAsyncResult asyncResult);
+      #endif
       List<MonsterInfo> GetMonsterList();
       #if SILVERLIGHT
       IAsyncResult Begin_GetMonsterList(AsyncCallback callback, object state);
       List<MonsterInfo> End_GetMonsterList(IAsyncResult asyncResult);
       #endif
-      void GetSkillInfo();
+      List<SkillInfo> GetPanelSkillInfo();
       #if SILVERLIGHT
-      IAsyncResult Begin_GetSkillInfo(AsyncCallback callback, object state);
-      void End_GetSkillInfo(IAsyncResult asyncResult);
+      IAsyncResult Begin_GetPanelSkillInfo(AsyncCallback callback, object state);
+      List<SkillInfo> End_GetPanelSkillInfo(IAsyncResult asyncResult);
+      #endif
+      List<SkillInfo> GetLearnedSkillInfo();
+      #if SILVERLIGHT
+      IAsyncResult Begin_GetLearnedSkillInfo(AsyncCallback callback, object state);
+      List<SkillInfo> End_GetLearnedSkillInfo(IAsyncResult asyncResult);
+      #endif
+      List<SlotSkillInfo> GetSlotSkillInfo();
+      #if SILVERLIGHT
+      IAsyncResult Begin_GetSlotSkillInfo(AsyncCallback callback, object state);
+      List<SlotSkillInfo> End_GetSlotSkillInfo(IAsyncResult asyncResult);
       #endif
       void ChangeAngle(double angle);
       #if SILVERLIGHT
@@ -64,6 +99,11 @@ namespace Thrift.GameCall
       IAsyncResult Begin_ClickKey(AsyncCallback callback, object state, int key, int ctrl);
       int End_ClickKey(IAsyncResult asyncResult);
       #endif
+      int ClickSkillKey(int key);
+      #if SILVERLIGHT
+      IAsyncResult Begin_ClickSkillKey(AsyncCallback callback, object state, int key);
+      int End_ClickSkillKey(IAsyncResult asyncResult);
+      #endif
       int LeftPressSlot(int SlotAddr);
       #if SILVERLIGHT
       IAsyncResult Begin_LeftPressSlot(AsyncCallback callback, object state, int SlotAddr);
@@ -73,6 +113,11 @@ namespace Thrift.GameCall
       #if SILVERLIGHT
       IAsyncResult Begin_RightPressSlot(AsyncCallback callback, object state, int SlotAddr);
       int End_RightPressSlot(IAsyncResult asyncResult);
+      #endif
+      int MoveSkillToSlot(int SkillID, int SlotAddr);
+      #if SILVERLIGHT
+      IAsyncResult Begin_MoveSkillToSlot(AsyncCallback callback, object state, int SkillID, int SlotAddr);
+      int End_MoveSkillToSlot(IAsyncResult asyncResult);
       #endif
     }
 
@@ -197,6 +242,258 @@ namespace Thrift.GameCall
 
       
       #if SILVERLIGHT
+      public IAsyncResult Begin_Test2(AsyncCallback callback, object state, int p1, int p2)
+      {
+        return send_Test2(callback, state, p1, p2);
+      }
+
+      public int End_Test2(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_Test2();
+      }
+
+      #endif
+
+      public int Test2(int p1, int p2)
+      {
+        #if !SILVERLIGHT
+        send_Test2(p1, p2);
+        return recv_Test2();
+
+        #else
+        var asyncResult = Begin_Test2(null, null, p1, p2);
+        return End_Test2(asyncResult);
+
+        #endif
+      }
+      #if SILVERLIGHT
+      public IAsyncResult send_Test2(AsyncCallback callback, object state, int p1, int p2)
+      #else
+      public void send_Test2(int p1, int p2)
+      #endif
+      {
+        oprot_.WriteMessageBegin(new TMessage("Test2", TMessageType.Call, seqid_));
+        Test2_args args = new Test2_args();
+        args.P1 = p1;
+        args.P2 = p2;
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        #if SILVERLIGHT
+        return oprot_.Transport.BeginFlush(callback, state);
+        #else
+        oprot_.Transport.Flush();
+        #endif
+      }
+
+      public int recv_Test2()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        Test2_result result = new Test2_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Test2 failed: unknown result");
+      }
+
+      
+      #if SILVERLIGHT
+      public IAsyncResult Begin_Test3(AsyncCallback callback, object state, double p1, double p2)
+      {
+        return send_Test3(callback, state, p1, p2);
+      }
+
+      public int End_Test3(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_Test3();
+      }
+
+      #endif
+
+      public int Test3(double p1, double p2)
+      {
+        #if !SILVERLIGHT
+        send_Test3(p1, p2);
+        return recv_Test3();
+
+        #else
+        var asyncResult = Begin_Test3(null, null, p1, p2);
+        return End_Test3(asyncResult);
+
+        #endif
+      }
+      #if SILVERLIGHT
+      public IAsyncResult send_Test3(AsyncCallback callback, object state, double p1, double p2)
+      #else
+      public void send_Test3(double p1, double p2)
+      #endif
+      {
+        oprot_.WriteMessageBegin(new TMessage("Test3", TMessageType.Call, seqid_));
+        Test3_args args = new Test3_args();
+        args.P1 = p1;
+        args.P2 = p2;
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        #if SILVERLIGHT
+        return oprot_.Transport.BeginFlush(callback, state);
+        #else
+        oprot_.Transport.Flush();
+        #endif
+      }
+
+      public int recv_Test3()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        Test3_result result = new Test3_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Test3 failed: unknown result");
+      }
+
+      
+      #if SILVERLIGHT
+      public IAsyncResult Begin_Test4(AsyncCallback callback, object state, int p1, int p2, int p3, int p4)
+      {
+        return send_Test4(callback, state, p1, p2, p3, p4);
+      }
+
+      public int End_Test4(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_Test4();
+      }
+
+      #endif
+
+      public int Test4(int p1, int p2, int p3, int p4)
+      {
+        #if !SILVERLIGHT
+        send_Test4(p1, p2, p3, p4);
+        return recv_Test4();
+
+        #else
+        var asyncResult = Begin_Test4(null, null, p1, p2, p3, p4);
+        return End_Test4(asyncResult);
+
+        #endif
+      }
+      #if SILVERLIGHT
+      public IAsyncResult send_Test4(AsyncCallback callback, object state, int p1, int p2, int p3, int p4)
+      #else
+      public void send_Test4(int p1, int p2, int p3, int p4)
+      #endif
+      {
+        oprot_.WriteMessageBegin(new TMessage("Test4", TMessageType.Call, seqid_));
+        Test4_args args = new Test4_args();
+        args.P1 = p1;
+        args.P2 = p2;
+        args.P3 = p3;
+        args.P4 = p4;
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        #if SILVERLIGHT
+        return oprot_.Transport.BeginFlush(callback, state);
+        #else
+        oprot_.Transport.Flush();
+        #endif
+      }
+
+      public int recv_Test4()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        Test4_result result = new Test4_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Test4 failed: unknown result");
+      }
+
+      
+      #if SILVERLIGHT
+      public IAsyncResult Begin_UnloadDll(AsyncCallback callback, object state)
+      {
+        return send_UnloadDll(callback, state);
+      }
+
+      public int End_UnloadDll(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_UnloadDll();
+      }
+
+      #endif
+
+      public int UnloadDll()
+      {
+        #if !SILVERLIGHT
+        send_UnloadDll();
+        return recv_UnloadDll();
+
+        #else
+        var asyncResult = Begin_UnloadDll(null, null);
+        return End_UnloadDll(asyncResult);
+
+        #endif
+      }
+      #if SILVERLIGHT
+      public IAsyncResult send_UnloadDll(AsyncCallback callback, object state)
+      #else
+      public void send_UnloadDll()
+      #endif
+      {
+        oprot_.WriteMessageBegin(new TMessage("UnloadDll", TMessageType.Call, seqid_));
+        UnloadDll_args args = new UnloadDll_args();
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        #if SILVERLIGHT
+        return oprot_.Transport.BeginFlush(callback, state);
+        #else
+        oprot_.Transport.Flush();
+        #endif
+      }
+
+      public int recv_UnloadDll()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        UnloadDll_result result = new UnloadDll_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "UnloadDll failed: unknown result");
+      }
+
+      
+      #if SILVERLIGHT
       public IAsyncResult Begin_EnterGame(AsyncCallback callback, object state, int Index)
       {
         return send_EnterGame(callback, state, Index);
@@ -317,6 +614,67 @@ namespace Thrift.GameCall
 
       
       #if SILVERLIGHT
+      public IAsyncResult Begin_GetPlayerPos(AsyncCallback callback, object state)
+      {
+        return send_GetPlayerPos(callback, state);
+      }
+
+      public PosInfo End_GetPlayerPos(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_GetPlayerPos();
+      }
+
+      #endif
+
+      public PosInfo GetPlayerPos()
+      {
+        #if !SILVERLIGHT
+        send_GetPlayerPos();
+        return recv_GetPlayerPos();
+
+        #else
+        var asyncResult = Begin_GetPlayerPos(null, null);
+        return End_GetPlayerPos(asyncResult);
+
+        #endif
+      }
+      #if SILVERLIGHT
+      public IAsyncResult send_GetPlayerPos(AsyncCallback callback, object state)
+      #else
+      public void send_GetPlayerPos()
+      #endif
+      {
+        oprot_.WriteMessageBegin(new TMessage("GetPlayerPos", TMessageType.Call, seqid_));
+        GetPlayerPos_args args = new GetPlayerPos_args();
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        #if SILVERLIGHT
+        return oprot_.Transport.BeginFlush(callback, state);
+        #else
+        oprot_.Transport.Flush();
+        #endif
+      }
+
+      public PosInfo recv_GetPlayerPos()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        GetPlayerPos_result result = new GetPlayerPos_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "GetPlayerPos failed: unknown result");
+      }
+
+      
+      #if SILVERLIGHT
       public IAsyncResult Begin_GetMonsterList(AsyncCallback callback, object state)
       {
         return send_GetMonsterList(callback, state);
@@ -378,39 +736,39 @@ namespace Thrift.GameCall
 
       
       #if SILVERLIGHT
-      public IAsyncResult Begin_GetSkillInfo(AsyncCallback callback, object state)
+      public IAsyncResult Begin_GetPanelSkillInfo(AsyncCallback callback, object state)
       {
-        return send_GetSkillInfo(callback, state);
+        return send_GetPanelSkillInfo(callback, state);
       }
 
-      public void End_GetSkillInfo(IAsyncResult asyncResult)
+      public List<SkillInfo> End_GetPanelSkillInfo(IAsyncResult asyncResult)
       {
         oprot_.Transport.EndFlush(asyncResult);
-        recv_GetSkillInfo();
+        return recv_GetPanelSkillInfo();
       }
 
       #endif
 
-      public void GetSkillInfo()
+      public List<SkillInfo> GetPanelSkillInfo()
       {
         #if !SILVERLIGHT
-        send_GetSkillInfo();
-        recv_GetSkillInfo();
+        send_GetPanelSkillInfo();
+        return recv_GetPanelSkillInfo();
 
         #else
-        var asyncResult = Begin_GetSkillInfo(null, null);
-        End_GetSkillInfo(asyncResult);
+        var asyncResult = Begin_GetPanelSkillInfo(null, null);
+        return End_GetPanelSkillInfo(asyncResult);
 
         #endif
       }
       #if SILVERLIGHT
-      public IAsyncResult send_GetSkillInfo(AsyncCallback callback, object state)
+      public IAsyncResult send_GetPanelSkillInfo(AsyncCallback callback, object state)
       #else
-      public void send_GetSkillInfo()
+      public void send_GetPanelSkillInfo()
       #endif
       {
-        oprot_.WriteMessageBegin(new TMessage("GetSkillInfo", TMessageType.Call, seqid_));
-        GetSkillInfo_args args = new GetSkillInfo_args();
+        oprot_.WriteMessageBegin(new TMessage("GetPanelSkillInfo", TMessageType.Call, seqid_));
+        GetPanelSkillInfo_args args = new GetPanelSkillInfo_args();
         args.Write(oprot_);
         oprot_.WriteMessageEnd();
         #if SILVERLIGHT
@@ -420,7 +778,7 @@ namespace Thrift.GameCall
         #endif
       }
 
-      public void recv_GetSkillInfo()
+      public List<SkillInfo> recv_GetPanelSkillInfo()
       {
         TMessage msg = iprot_.ReadMessageBegin();
         if (msg.Type == TMessageType.Exception) {
@@ -428,10 +786,135 @@ namespace Thrift.GameCall
           iprot_.ReadMessageEnd();
           throw x;
         }
-        GetSkillInfo_result result = new GetSkillInfo_result();
+        GetPanelSkillInfo_result result = new GetPanelSkillInfo_result();
         result.Read(iprot_);
         iprot_.ReadMessageEnd();
-        return;
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "GetPanelSkillInfo failed: unknown result");
+      }
+
+      
+      #if SILVERLIGHT
+      public IAsyncResult Begin_GetLearnedSkillInfo(AsyncCallback callback, object state)
+      {
+        return send_GetLearnedSkillInfo(callback, state);
+      }
+
+      public List<SkillInfo> End_GetLearnedSkillInfo(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_GetLearnedSkillInfo();
+      }
+
+      #endif
+
+      public List<SkillInfo> GetLearnedSkillInfo()
+      {
+        #if !SILVERLIGHT
+        send_GetLearnedSkillInfo();
+        return recv_GetLearnedSkillInfo();
+
+        #else
+        var asyncResult = Begin_GetLearnedSkillInfo(null, null);
+        return End_GetLearnedSkillInfo(asyncResult);
+
+        #endif
+      }
+      #if SILVERLIGHT
+      public IAsyncResult send_GetLearnedSkillInfo(AsyncCallback callback, object state)
+      #else
+      public void send_GetLearnedSkillInfo()
+      #endif
+      {
+        oprot_.WriteMessageBegin(new TMessage("GetLearnedSkillInfo", TMessageType.Call, seqid_));
+        GetLearnedSkillInfo_args args = new GetLearnedSkillInfo_args();
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        #if SILVERLIGHT
+        return oprot_.Transport.BeginFlush(callback, state);
+        #else
+        oprot_.Transport.Flush();
+        #endif
+      }
+
+      public List<SkillInfo> recv_GetLearnedSkillInfo()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        GetLearnedSkillInfo_result result = new GetLearnedSkillInfo_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "GetLearnedSkillInfo failed: unknown result");
+      }
+
+      
+      #if SILVERLIGHT
+      public IAsyncResult Begin_GetSlotSkillInfo(AsyncCallback callback, object state)
+      {
+        return send_GetSlotSkillInfo(callback, state);
+      }
+
+      public List<SlotSkillInfo> End_GetSlotSkillInfo(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_GetSlotSkillInfo();
+      }
+
+      #endif
+
+      public List<SlotSkillInfo> GetSlotSkillInfo()
+      {
+        #if !SILVERLIGHT
+        send_GetSlotSkillInfo();
+        return recv_GetSlotSkillInfo();
+
+        #else
+        var asyncResult = Begin_GetSlotSkillInfo(null, null);
+        return End_GetSlotSkillInfo(asyncResult);
+
+        #endif
+      }
+      #if SILVERLIGHT
+      public IAsyncResult send_GetSlotSkillInfo(AsyncCallback callback, object state)
+      #else
+      public void send_GetSlotSkillInfo()
+      #endif
+      {
+        oprot_.WriteMessageBegin(new TMessage("GetSlotSkillInfo", TMessageType.Call, seqid_));
+        GetSlotSkillInfo_args args = new GetSlotSkillInfo_args();
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        #if SILVERLIGHT
+        return oprot_.Transport.BeginFlush(callback, state);
+        #else
+        oprot_.Transport.Flush();
+        #endif
+      }
+
+      public List<SlotSkillInfo> recv_GetSlotSkillInfo()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        GetSlotSkillInfo_result result = new GetSlotSkillInfo_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "GetSlotSkillInfo failed: unknown result");
       }
 
       
@@ -684,6 +1167,68 @@ namespace Thrift.GameCall
 
       
       #if SILVERLIGHT
+      public IAsyncResult Begin_ClickSkillKey(AsyncCallback callback, object state, int key)
+      {
+        return send_ClickSkillKey(callback, state, key);
+      }
+
+      public int End_ClickSkillKey(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_ClickSkillKey();
+      }
+
+      #endif
+
+      public int ClickSkillKey(int key)
+      {
+        #if !SILVERLIGHT
+        send_ClickSkillKey(key);
+        return recv_ClickSkillKey();
+
+        #else
+        var asyncResult = Begin_ClickSkillKey(null, null, key);
+        return End_ClickSkillKey(asyncResult);
+
+        #endif
+      }
+      #if SILVERLIGHT
+      public IAsyncResult send_ClickSkillKey(AsyncCallback callback, object state, int key)
+      #else
+      public void send_ClickSkillKey(int key)
+      #endif
+      {
+        oprot_.WriteMessageBegin(new TMessage("ClickSkillKey", TMessageType.Call, seqid_));
+        ClickSkillKey_args args = new ClickSkillKey_args();
+        args.Key = key;
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        #if SILVERLIGHT
+        return oprot_.Transport.BeginFlush(callback, state);
+        #else
+        oprot_.Transport.Flush();
+        #endif
+      }
+
+      public int recv_ClickSkillKey()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        ClickSkillKey_result result = new ClickSkillKey_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "ClickSkillKey failed: unknown result");
+      }
+
+      
+      #if SILVERLIGHT
       public IAsyncResult Begin_LeftPressSlot(AsyncCallback callback, object state, int SlotAddr)
       {
         return send_LeftPressSlot(callback, state, SlotAddr);
@@ -806,22 +1351,94 @@ namespace Thrift.GameCall
         throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "RightPressSlot failed: unknown result");
       }
 
+      
+      #if SILVERLIGHT
+      public IAsyncResult Begin_MoveSkillToSlot(AsyncCallback callback, object state, int SkillID, int SlotAddr)
+      {
+        return send_MoveSkillToSlot(callback, state, SkillID, SlotAddr);
+      }
+
+      public int End_MoveSkillToSlot(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_MoveSkillToSlot();
+      }
+
+      #endif
+
+      public int MoveSkillToSlot(int SkillID, int SlotAddr)
+      {
+        #if !SILVERLIGHT
+        send_MoveSkillToSlot(SkillID, SlotAddr);
+        return recv_MoveSkillToSlot();
+
+        #else
+        var asyncResult = Begin_MoveSkillToSlot(null, null, SkillID, SlotAddr);
+        return End_MoveSkillToSlot(asyncResult);
+
+        #endif
+      }
+      #if SILVERLIGHT
+      public IAsyncResult send_MoveSkillToSlot(AsyncCallback callback, object state, int SkillID, int SlotAddr)
+      #else
+      public void send_MoveSkillToSlot(int SkillID, int SlotAddr)
+      #endif
+      {
+        oprot_.WriteMessageBegin(new TMessage("MoveSkillToSlot", TMessageType.Call, seqid_));
+        MoveSkillToSlot_args args = new MoveSkillToSlot_args();
+        args.SkillID = SkillID;
+        args.SlotAddr = SlotAddr;
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        #if SILVERLIGHT
+        return oprot_.Transport.BeginFlush(callback, state);
+        #else
+        oprot_.Transport.Flush();
+        #endif
+      }
+
+      public int recv_MoveSkillToSlot()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        MoveSkillToSlot_result result = new MoveSkillToSlot_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "MoveSkillToSlot failed: unknown result");
+      }
+
     }
     public class Processor : TProcessor {
       public Processor(Iface iface)
       {
         iface_ = iface;
         processMap_["Test"] = Test_Process;
+        processMap_["Test2"] = Test2_Process;
+        processMap_["Test3"] = Test3_Process;
+        processMap_["Test4"] = Test4_Process;
+        processMap_["UnloadDll"] = UnloadDll_Process;
         processMap_["EnterGame"] = EnterGame_Process;
         processMap_["GetPlayerInfo"] = GetPlayerInfo_Process;
+        processMap_["GetPlayerPos"] = GetPlayerPos_Process;
         processMap_["GetMonsterList"] = GetMonsterList_Process;
-        processMap_["GetSkillInfo"] = GetSkillInfo_Process;
+        processMap_["GetPanelSkillInfo"] = GetPanelSkillInfo_Process;
+        processMap_["GetLearnedSkillInfo"] = GetLearnedSkillInfo_Process;
+        processMap_["GetSlotSkillInfo"] = GetSlotSkillInfo_Process;
         processMap_["ChangeAngle"] = ChangeAngle_Process;
         processMap_["FindPath"] = FindPath_Process;
         processMap_["PressKey"] = PressKey_Process;
         processMap_["ClickKey"] = ClickKey_Process;
+        processMap_["ClickSkillKey"] = ClickSkillKey_Process;
         processMap_["LeftPressSlot"] = LeftPressSlot_Process;
         processMap_["RightPressSlot"] = RightPressSlot_Process;
+        processMap_["MoveSkillToSlot"] = MoveSkillToSlot_Process;
       }
 
       protected delegate void ProcessFunction(int seqid, TProtocol iprot, TProtocol oprot);
@@ -867,6 +1484,58 @@ namespace Thrift.GameCall
         oprot.Transport.Flush();
       }
 
+      public void Test2_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        Test2_args args = new Test2_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        Test2_result result = new Test2_result();
+        result.Success = iface_.Test2(args.P1, args.P2);
+        oprot.WriteMessageBegin(new TMessage("Test2", TMessageType.Reply, seqid)); 
+        result.Write(oprot);
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void Test3_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        Test3_args args = new Test3_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        Test3_result result = new Test3_result();
+        result.Success = iface_.Test3(args.P1, args.P2);
+        oprot.WriteMessageBegin(new TMessage("Test3", TMessageType.Reply, seqid)); 
+        result.Write(oprot);
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void Test4_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        Test4_args args = new Test4_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        Test4_result result = new Test4_result();
+        result.Success = iface_.Test4(args.P1, args.P2, args.P3, args.P4);
+        oprot.WriteMessageBegin(new TMessage("Test4", TMessageType.Reply, seqid)); 
+        result.Write(oprot);
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void UnloadDll_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        UnloadDll_args args = new UnloadDll_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        UnloadDll_result result = new UnloadDll_result();
+        result.Success = iface_.UnloadDll();
+        oprot.WriteMessageBegin(new TMessage("UnloadDll", TMessageType.Reply, seqid)); 
+        result.Write(oprot);
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
       public void EnterGame_Process(int seqid, TProtocol iprot, TProtocol oprot)
       {
         EnterGame_args args = new EnterGame_args();
@@ -893,6 +1562,19 @@ namespace Thrift.GameCall
         oprot.Transport.Flush();
       }
 
+      public void GetPlayerPos_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        GetPlayerPos_args args = new GetPlayerPos_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        GetPlayerPos_result result = new GetPlayerPos_result();
+        result.Success = iface_.GetPlayerPos();
+        oprot.WriteMessageBegin(new TMessage("GetPlayerPos", TMessageType.Reply, seqid)); 
+        result.Write(oprot);
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
       public void GetMonsterList_Process(int seqid, TProtocol iprot, TProtocol oprot)
       {
         GetMonsterList_args args = new GetMonsterList_args();
@@ -906,14 +1588,40 @@ namespace Thrift.GameCall
         oprot.Transport.Flush();
       }
 
-      public void GetSkillInfo_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      public void GetPanelSkillInfo_Process(int seqid, TProtocol iprot, TProtocol oprot)
       {
-        GetSkillInfo_args args = new GetSkillInfo_args();
+        GetPanelSkillInfo_args args = new GetPanelSkillInfo_args();
         args.Read(iprot);
         iprot.ReadMessageEnd();
-        GetSkillInfo_result result = new GetSkillInfo_result();
-        iface_.GetSkillInfo();
-        oprot.WriteMessageBegin(new TMessage("GetSkillInfo", TMessageType.Reply, seqid)); 
+        GetPanelSkillInfo_result result = new GetPanelSkillInfo_result();
+        result.Success = iface_.GetPanelSkillInfo();
+        oprot.WriteMessageBegin(new TMessage("GetPanelSkillInfo", TMessageType.Reply, seqid)); 
+        result.Write(oprot);
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void GetLearnedSkillInfo_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        GetLearnedSkillInfo_args args = new GetLearnedSkillInfo_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        GetLearnedSkillInfo_result result = new GetLearnedSkillInfo_result();
+        result.Success = iface_.GetLearnedSkillInfo();
+        oprot.WriteMessageBegin(new TMessage("GetLearnedSkillInfo", TMessageType.Reply, seqid)); 
+        result.Write(oprot);
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void GetSlotSkillInfo_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        GetSlotSkillInfo_args args = new GetSlotSkillInfo_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        GetSlotSkillInfo_result result = new GetSlotSkillInfo_result();
+        result.Success = iface_.GetSlotSkillInfo();
+        oprot.WriteMessageBegin(new TMessage("GetSlotSkillInfo", TMessageType.Reply, seqid)); 
         result.Write(oprot);
         oprot.WriteMessageEnd();
         oprot.Transport.Flush();
@@ -971,6 +1679,19 @@ namespace Thrift.GameCall
         oprot.Transport.Flush();
       }
 
+      public void ClickSkillKey_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        ClickSkillKey_args args = new ClickSkillKey_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        ClickSkillKey_result result = new ClickSkillKey_result();
+        result.Success = iface_.ClickSkillKey(args.Key);
+        oprot.WriteMessageBegin(new TMessage("ClickSkillKey", TMessageType.Reply, seqid)); 
+        result.Write(oprot);
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
       public void LeftPressSlot_Process(int seqid, TProtocol iprot, TProtocol oprot)
       {
         LeftPressSlot_args args = new LeftPressSlot_args();
@@ -992,6 +1713,19 @@ namespace Thrift.GameCall
         RightPressSlot_result result = new RightPressSlot_result();
         result.Success = iface_.RightPressSlot(args.SlotAddr);
         oprot.WriteMessageBegin(new TMessage("RightPressSlot", TMessageType.Reply, seqid)); 
+        result.Write(oprot);
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void MoveSkillToSlot_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        MoveSkillToSlot_args args = new MoveSkillToSlot_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        MoveSkillToSlot_result result = new MoveSkillToSlot_result();
+        result.Success = iface_.MoveSkillToSlot(args.SkillID, args.SlotAddr);
+        oprot.WriteMessageBegin(new TMessage("MoveSkillToSlot", TMessageType.Reply, seqid)); 
         result.Write(oprot);
         oprot.WriteMessageEnd();
         oprot.Transport.Flush();
@@ -1198,6 +1932,825 @@ namespace Thrift.GameCall
 
       public override string ToString() {
         StringBuilder sb = new StringBuilder("Test_result(");
+        sb.Append("Success: ");
+        sb.Append(Success);
+        sb.Append(")");
+        return sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Test2_args : TBase
+    {
+      private int _p1;
+      private int _p2;
+
+      public int P1
+      {
+        get
+        {
+          return _p1;
+        }
+        set
+        {
+          __isset.p1 = true;
+          this._p1 = value;
+        }
+      }
+
+      public int P2
+      {
+        get
+        {
+          return _p2;
+        }
+        set
+        {
+          __isset.p2 = true;
+          this._p2 = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool p1;
+        public bool p2;
+      }
+
+      public Test2_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 1:
+              if (field.Type == TType.I32) {
+                P1 = iprot.ReadI32();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 2:
+              if (field.Type == TType.I32) {
+                P2 = iprot.ReadI32();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+
+      public void Write(TProtocol oprot) {
+        TStruct struc = new TStruct("Test2_args");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+        if (__isset.p1) {
+          field.Name = "p1";
+          field.Type = TType.I32;
+          field.ID = 1;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI32(P1);
+          oprot.WriteFieldEnd();
+        }
+        if (__isset.p2) {
+          field.Name = "p2";
+          field.Type = TType.I32;
+          field.ID = 2;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI32(P2);
+          oprot.WriteFieldEnd();
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+
+      public override string ToString() {
+        StringBuilder sb = new StringBuilder("Test2_args(");
+        sb.Append("P1: ");
+        sb.Append(P1);
+        sb.Append(",P2: ");
+        sb.Append(P2);
+        sb.Append(")");
+        return sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Test2_result : TBase
+    {
+      private int _success;
+
+      public int Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool success;
+      }
+
+      public Test2_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 0:
+              if (field.Type == TType.I32) {
+                Success = iprot.ReadI32();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+
+      public void Write(TProtocol oprot) {
+        TStruct struc = new TStruct("Test2_result");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+
+        if (this.__isset.success) {
+          field.Name = "Success";
+          field.Type = TType.I32;
+          field.ID = 0;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI32(Success);
+          oprot.WriteFieldEnd();
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+
+      public override string ToString() {
+        StringBuilder sb = new StringBuilder("Test2_result(");
+        sb.Append("Success: ");
+        sb.Append(Success);
+        sb.Append(")");
+        return sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Test3_args : TBase
+    {
+      private double _p1;
+      private double _p2;
+
+      public double P1
+      {
+        get
+        {
+          return _p1;
+        }
+        set
+        {
+          __isset.p1 = true;
+          this._p1 = value;
+        }
+      }
+
+      public double P2
+      {
+        get
+        {
+          return _p2;
+        }
+        set
+        {
+          __isset.p2 = true;
+          this._p2 = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool p1;
+        public bool p2;
+      }
+
+      public Test3_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 1:
+              if (field.Type == TType.Double) {
+                P1 = iprot.ReadDouble();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 2:
+              if (field.Type == TType.Double) {
+                P2 = iprot.ReadDouble();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+
+      public void Write(TProtocol oprot) {
+        TStruct struc = new TStruct("Test3_args");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+        if (__isset.p1) {
+          field.Name = "p1";
+          field.Type = TType.Double;
+          field.ID = 1;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteDouble(P1);
+          oprot.WriteFieldEnd();
+        }
+        if (__isset.p2) {
+          field.Name = "p2";
+          field.Type = TType.Double;
+          field.ID = 2;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteDouble(P2);
+          oprot.WriteFieldEnd();
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+
+      public override string ToString() {
+        StringBuilder sb = new StringBuilder("Test3_args(");
+        sb.Append("P1: ");
+        sb.Append(P1);
+        sb.Append(",P2: ");
+        sb.Append(P2);
+        sb.Append(")");
+        return sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Test3_result : TBase
+    {
+      private int _success;
+
+      public int Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool success;
+      }
+
+      public Test3_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 0:
+              if (field.Type == TType.I32) {
+                Success = iprot.ReadI32();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+
+      public void Write(TProtocol oprot) {
+        TStruct struc = new TStruct("Test3_result");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+
+        if (this.__isset.success) {
+          field.Name = "Success";
+          field.Type = TType.I32;
+          field.ID = 0;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI32(Success);
+          oprot.WriteFieldEnd();
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+
+      public override string ToString() {
+        StringBuilder sb = new StringBuilder("Test3_result(");
+        sb.Append("Success: ");
+        sb.Append(Success);
+        sb.Append(")");
+        return sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Test4_args : TBase
+    {
+      private int _p1;
+      private int _p2;
+      private int _p3;
+      private int _p4;
+
+      public int P1
+      {
+        get
+        {
+          return _p1;
+        }
+        set
+        {
+          __isset.p1 = true;
+          this._p1 = value;
+        }
+      }
+
+      public int P2
+      {
+        get
+        {
+          return _p2;
+        }
+        set
+        {
+          __isset.p2 = true;
+          this._p2 = value;
+        }
+      }
+
+      public int P3
+      {
+        get
+        {
+          return _p3;
+        }
+        set
+        {
+          __isset.p3 = true;
+          this._p3 = value;
+        }
+      }
+
+      public int P4
+      {
+        get
+        {
+          return _p4;
+        }
+        set
+        {
+          __isset.p4 = true;
+          this._p4 = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool p1;
+        public bool p2;
+        public bool p3;
+        public bool p4;
+      }
+
+      public Test4_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 1:
+              if (field.Type == TType.I32) {
+                P1 = iprot.ReadI32();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 2:
+              if (field.Type == TType.I32) {
+                P2 = iprot.ReadI32();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 3:
+              if (field.Type == TType.I32) {
+                P3 = iprot.ReadI32();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 4:
+              if (field.Type == TType.I32) {
+                P4 = iprot.ReadI32();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+
+      public void Write(TProtocol oprot) {
+        TStruct struc = new TStruct("Test4_args");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+        if (__isset.p1) {
+          field.Name = "p1";
+          field.Type = TType.I32;
+          field.ID = 1;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI32(P1);
+          oprot.WriteFieldEnd();
+        }
+        if (__isset.p2) {
+          field.Name = "p2";
+          field.Type = TType.I32;
+          field.ID = 2;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI32(P2);
+          oprot.WriteFieldEnd();
+        }
+        if (__isset.p3) {
+          field.Name = "p3";
+          field.Type = TType.I32;
+          field.ID = 3;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI32(P3);
+          oprot.WriteFieldEnd();
+        }
+        if (__isset.p4) {
+          field.Name = "p4";
+          field.Type = TType.I32;
+          field.ID = 4;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI32(P4);
+          oprot.WriteFieldEnd();
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+
+      public override string ToString() {
+        StringBuilder sb = new StringBuilder("Test4_args(");
+        sb.Append("P1: ");
+        sb.Append(P1);
+        sb.Append(",P2: ");
+        sb.Append(P2);
+        sb.Append(",P3: ");
+        sb.Append(P3);
+        sb.Append(",P4: ");
+        sb.Append(P4);
+        sb.Append(")");
+        return sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Test4_result : TBase
+    {
+      private int _success;
+
+      public int Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool success;
+      }
+
+      public Test4_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 0:
+              if (field.Type == TType.I32) {
+                Success = iprot.ReadI32();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+
+      public void Write(TProtocol oprot) {
+        TStruct struc = new TStruct("Test4_result");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+
+        if (this.__isset.success) {
+          field.Name = "Success";
+          field.Type = TType.I32;
+          field.ID = 0;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI32(Success);
+          oprot.WriteFieldEnd();
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+
+      public override string ToString() {
+        StringBuilder sb = new StringBuilder("Test4_result(");
+        sb.Append("Success: ");
+        sb.Append(Success);
+        sb.Append(")");
+        return sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class UnloadDll_args : TBase
+    {
+
+      public UnloadDll_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+
+      public void Write(TProtocol oprot) {
+        TStruct struc = new TStruct("UnloadDll_args");
+        oprot.WriteStructBegin(struc);
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+
+      public override string ToString() {
+        StringBuilder sb = new StringBuilder("UnloadDll_args(");
+        sb.Append(")");
+        return sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class UnloadDll_result : TBase
+    {
+      private int _success;
+
+      public int Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool success;
+      }
+
+      public UnloadDll_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 0:
+              if (field.Type == TType.I32) {
+                Success = iprot.ReadI32();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+
+      public void Write(TProtocol oprot) {
+        TStruct struc = new TStruct("UnloadDll_result");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+
+        if (this.__isset.success) {
+          field.Name = "Success";
+          field.Type = TType.I32;
+          field.ID = 0;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI32(Success);
+          oprot.WriteFieldEnd();
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+
+      public override string ToString() {
+        StringBuilder sb = new StringBuilder("UnloadDll_result(");
         sb.Append("Success: ");
         sb.Append(Success);
         sb.Append(")");
@@ -1481,6 +3034,143 @@ namespace Thrift.GameCall
     #if !SILVERLIGHT
     [Serializable]
     #endif
+    public partial class GetPlayerPos_args : TBase
+    {
+
+      public GetPlayerPos_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+
+      public void Write(TProtocol oprot) {
+        TStruct struc = new TStruct("GetPlayerPos_args");
+        oprot.WriteStructBegin(struc);
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+
+      public override string ToString() {
+        StringBuilder sb = new StringBuilder("GetPlayerPos_args(");
+        sb.Append(")");
+        return sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class GetPlayerPos_result : TBase
+    {
+      private PosInfo _success;
+
+      public PosInfo Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool success;
+      }
+
+      public GetPlayerPos_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 0:
+              if (field.Type == TType.Struct) {
+                Success = new PosInfo();
+                Success.Read(iprot);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+
+      public void Write(TProtocol oprot) {
+        TStruct struc = new TStruct("GetPlayerPos_result");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+
+        if (this.__isset.success) {
+          if (Success != null) {
+            field.Name = "Success";
+            field.Type = TType.Struct;
+            field.ID = 0;
+            oprot.WriteFieldBegin(field);
+            Success.Write(oprot);
+            oprot.WriteFieldEnd();
+          }
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+
+      public override string ToString() {
+        StringBuilder sb = new StringBuilder("GetPlayerPos_result(");
+        sb.Append("Success: ");
+        sb.Append(Success== null ? "<null>" : Success.ToString());
+        sb.Append(")");
+        return sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
     public partial class GetMonsterList_args : TBase
     {
 
@@ -1572,13 +3262,13 @@ namespace Thrift.GameCall
               if (field.Type == TType.List) {
                 {
                   Success = new List<MonsterInfo>();
-                  TList _list8 = iprot.ReadListBegin();
-                  for( int _i9 = 0; _i9 < _list8.Count; ++_i9)
+                  TList _list16 = iprot.ReadListBegin();
+                  for( int _i17 = 0; _i17 < _list16.Count; ++_i17)
                   {
-                    MonsterInfo _elem10 = new MonsterInfo();
-                    _elem10 = new MonsterInfo();
-                    _elem10.Read(iprot);
-                    Success.Add(_elem10);
+                    MonsterInfo _elem18 = new MonsterInfo();
+                    _elem18 = new MonsterInfo();
+                    _elem18.Read(iprot);
+                    Success.Add(_elem18);
                   }
                   iprot.ReadListEnd();
                 }
@@ -1608,9 +3298,9 @@ namespace Thrift.GameCall
             oprot.WriteFieldBegin(field);
             {
               oprot.WriteListBegin(new TList(TType.Struct, Success.Count));
-              foreach (MonsterInfo _iter11 in Success)
+              foreach (MonsterInfo _iter19 in Success)
               {
-                _iter11.Write(oprot);
+                _iter19.Write(oprot);
               }
               oprot.WriteListEnd();
             }
@@ -1635,10 +3325,10 @@ namespace Thrift.GameCall
     #if !SILVERLIGHT
     [Serializable]
     #endif
-    public partial class GetSkillInfo_args : TBase
+    public partial class GetPanelSkillInfo_args : TBase
     {
 
-      public GetSkillInfo_args() {
+      public GetPanelSkillInfo_args() {
       }
 
       public void Read (TProtocol iprot)
@@ -1663,14 +3353,14 @@ namespace Thrift.GameCall
       }
 
       public void Write(TProtocol oprot) {
-        TStruct struc = new TStruct("GetSkillInfo_args");
+        TStruct struc = new TStruct("GetPanelSkillInfo_args");
         oprot.WriteStructBegin(struc);
         oprot.WriteFieldStop();
         oprot.WriteStructEnd();
       }
 
       public override string ToString() {
-        StringBuilder sb = new StringBuilder("GetSkillInfo_args(");
+        StringBuilder sb = new StringBuilder("GetPanelSkillInfo_args(");
         sb.Append(")");
         return sb.ToString();
       }
@@ -1681,10 +3371,118 @@ namespace Thrift.GameCall
     #if !SILVERLIGHT
     [Serializable]
     #endif
-    public partial class GetSkillInfo_result : TBase
+    public partial class GetPanelSkillInfo_result : TBase
+    {
+      private List<SkillInfo> _success;
+
+      public List<SkillInfo> Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool success;
+      }
+
+      public GetPanelSkillInfo_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 0:
+              if (field.Type == TType.List) {
+                {
+                  Success = new List<SkillInfo>();
+                  TList _list20 = iprot.ReadListBegin();
+                  for( int _i21 = 0; _i21 < _list20.Count; ++_i21)
+                  {
+                    SkillInfo _elem22 = new SkillInfo();
+                    _elem22 = new SkillInfo();
+                    _elem22.Read(iprot);
+                    Success.Add(_elem22);
+                  }
+                  iprot.ReadListEnd();
+                }
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+
+      public void Write(TProtocol oprot) {
+        TStruct struc = new TStruct("GetPanelSkillInfo_result");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+
+        if (this.__isset.success) {
+          if (Success != null) {
+            field.Name = "Success";
+            field.Type = TType.List;
+            field.ID = 0;
+            oprot.WriteFieldBegin(field);
+            {
+              oprot.WriteListBegin(new TList(TType.Struct, Success.Count));
+              foreach (SkillInfo _iter23 in Success)
+              {
+                _iter23.Write(oprot);
+              }
+              oprot.WriteListEnd();
+            }
+            oprot.WriteFieldEnd();
+          }
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+
+      public override string ToString() {
+        StringBuilder sb = new StringBuilder("GetPanelSkillInfo_result(");
+        sb.Append("Success: ");
+        sb.Append(Success);
+        sb.Append(")");
+        return sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class GetLearnedSkillInfo_args : TBase
     {
 
-      public GetSkillInfo_result() {
+      public GetLearnedSkillInfo_args() {
       }
 
       public void Read (TProtocol iprot)
@@ -1709,15 +3507,276 @@ namespace Thrift.GameCall
       }
 
       public void Write(TProtocol oprot) {
-        TStruct struc = new TStruct("GetSkillInfo_result");
+        TStruct struc = new TStruct("GetLearnedSkillInfo_args");
         oprot.WriteStructBegin(struc);
-
         oprot.WriteFieldStop();
         oprot.WriteStructEnd();
       }
 
       public override string ToString() {
-        StringBuilder sb = new StringBuilder("GetSkillInfo_result(");
+        StringBuilder sb = new StringBuilder("GetLearnedSkillInfo_args(");
+        sb.Append(")");
+        return sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class GetLearnedSkillInfo_result : TBase
+    {
+      private List<SkillInfo> _success;
+
+      public List<SkillInfo> Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool success;
+      }
+
+      public GetLearnedSkillInfo_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 0:
+              if (field.Type == TType.List) {
+                {
+                  Success = new List<SkillInfo>();
+                  TList _list24 = iprot.ReadListBegin();
+                  for( int _i25 = 0; _i25 < _list24.Count; ++_i25)
+                  {
+                    SkillInfo _elem26 = new SkillInfo();
+                    _elem26 = new SkillInfo();
+                    _elem26.Read(iprot);
+                    Success.Add(_elem26);
+                  }
+                  iprot.ReadListEnd();
+                }
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+
+      public void Write(TProtocol oprot) {
+        TStruct struc = new TStruct("GetLearnedSkillInfo_result");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+
+        if (this.__isset.success) {
+          if (Success != null) {
+            field.Name = "Success";
+            field.Type = TType.List;
+            field.ID = 0;
+            oprot.WriteFieldBegin(field);
+            {
+              oprot.WriteListBegin(new TList(TType.Struct, Success.Count));
+              foreach (SkillInfo _iter27 in Success)
+              {
+                _iter27.Write(oprot);
+              }
+              oprot.WriteListEnd();
+            }
+            oprot.WriteFieldEnd();
+          }
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+
+      public override string ToString() {
+        StringBuilder sb = new StringBuilder("GetLearnedSkillInfo_result(");
+        sb.Append("Success: ");
+        sb.Append(Success);
+        sb.Append(")");
+        return sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class GetSlotSkillInfo_args : TBase
+    {
+
+      public GetSlotSkillInfo_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+
+      public void Write(TProtocol oprot) {
+        TStruct struc = new TStruct("GetSlotSkillInfo_args");
+        oprot.WriteStructBegin(struc);
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+
+      public override string ToString() {
+        StringBuilder sb = new StringBuilder("GetSlotSkillInfo_args(");
+        sb.Append(")");
+        return sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class GetSlotSkillInfo_result : TBase
+    {
+      private List<SlotSkillInfo> _success;
+
+      public List<SlotSkillInfo> Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool success;
+      }
+
+      public GetSlotSkillInfo_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 0:
+              if (field.Type == TType.List) {
+                {
+                  Success = new List<SlotSkillInfo>();
+                  TList _list28 = iprot.ReadListBegin();
+                  for( int _i29 = 0; _i29 < _list28.Count; ++_i29)
+                  {
+                    SlotSkillInfo _elem30 = new SlotSkillInfo();
+                    _elem30 = new SlotSkillInfo();
+                    _elem30.Read(iprot);
+                    Success.Add(_elem30);
+                  }
+                  iprot.ReadListEnd();
+                }
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+
+      public void Write(TProtocol oprot) {
+        TStruct struc = new TStruct("GetSlotSkillInfo_result");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+
+        if (this.__isset.success) {
+          if (Success != null) {
+            field.Name = "Success";
+            field.Type = TType.List;
+            field.ID = 0;
+            oprot.WriteFieldBegin(field);
+            {
+              oprot.WriteListBegin(new TList(TType.Struct, Success.Count));
+              foreach (SlotSkillInfo _iter31 in Success)
+              {
+                _iter31.Write(oprot);
+              }
+              oprot.WriteListEnd();
+            }
+            oprot.WriteFieldEnd();
+          }
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+
+      public override string ToString() {
+        StringBuilder sb = new StringBuilder("GetSlotSkillInfo_result(");
+        sb.Append("Success: ");
+        sb.Append(Success);
         sb.Append(")");
         return sb.ToString();
       }
@@ -2483,6 +4542,181 @@ namespace Thrift.GameCall
     #if !SILVERLIGHT
     [Serializable]
     #endif
+    public partial class ClickSkillKey_args : TBase
+    {
+      private int _key;
+
+      public int Key
+      {
+        get
+        {
+          return _key;
+        }
+        set
+        {
+          __isset.key = true;
+          this._key = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool key;
+      }
+
+      public ClickSkillKey_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 1:
+              if (field.Type == TType.I32) {
+                Key = iprot.ReadI32();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+
+      public void Write(TProtocol oprot) {
+        TStruct struc = new TStruct("ClickSkillKey_args");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+        if (__isset.key) {
+          field.Name = "key";
+          field.Type = TType.I32;
+          field.ID = 1;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI32(Key);
+          oprot.WriteFieldEnd();
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+
+      public override string ToString() {
+        StringBuilder sb = new StringBuilder("ClickSkillKey_args(");
+        sb.Append("Key: ");
+        sb.Append(Key);
+        sb.Append(")");
+        return sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class ClickSkillKey_result : TBase
+    {
+      private int _success;
+
+      public int Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool success;
+      }
+
+      public ClickSkillKey_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 0:
+              if (field.Type == TType.I32) {
+                Success = iprot.ReadI32();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+
+      public void Write(TProtocol oprot) {
+        TStruct struc = new TStruct("ClickSkillKey_result");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+
+        if (this.__isset.success) {
+          field.Name = "Success";
+          field.Type = TType.I32;
+          field.ID = 0;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI32(Success);
+          oprot.WriteFieldEnd();
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+
+      public override string ToString() {
+        StringBuilder sb = new StringBuilder("ClickSkillKey_result(");
+        sb.Append("Success: ");
+        sb.Append(Success);
+        sb.Append(")");
+        return sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
     public partial class LeftPressSlot_args : TBase
     {
       private int _SlotAddr;
@@ -2821,6 +5055,213 @@ namespace Thrift.GameCall
 
       public override string ToString() {
         StringBuilder sb = new StringBuilder("RightPressSlot_result(");
+        sb.Append("Success: ");
+        sb.Append(Success);
+        sb.Append(")");
+        return sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class MoveSkillToSlot_args : TBase
+    {
+      private int _SkillID;
+      private int _SlotAddr;
+
+      public int SkillID
+      {
+        get
+        {
+          return _SkillID;
+        }
+        set
+        {
+          __isset.SkillID = true;
+          this._SkillID = value;
+        }
+      }
+
+      public int SlotAddr
+      {
+        get
+        {
+          return _SlotAddr;
+        }
+        set
+        {
+          __isset.SlotAddr = true;
+          this._SlotAddr = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool SkillID;
+        public bool SlotAddr;
+      }
+
+      public MoveSkillToSlot_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 1:
+              if (field.Type == TType.I32) {
+                SkillID = iprot.ReadI32();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 2:
+              if (field.Type == TType.I32) {
+                SlotAddr = iprot.ReadI32();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+
+      public void Write(TProtocol oprot) {
+        TStruct struc = new TStruct("MoveSkillToSlot_args");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+        if (__isset.SkillID) {
+          field.Name = "SkillID";
+          field.Type = TType.I32;
+          field.ID = 1;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI32(SkillID);
+          oprot.WriteFieldEnd();
+        }
+        if (__isset.SlotAddr) {
+          field.Name = "SlotAddr";
+          field.Type = TType.I32;
+          field.ID = 2;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI32(SlotAddr);
+          oprot.WriteFieldEnd();
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+
+      public override string ToString() {
+        StringBuilder sb = new StringBuilder("MoveSkillToSlot_args(");
+        sb.Append("SkillID: ");
+        sb.Append(SkillID);
+        sb.Append(",SlotAddr: ");
+        sb.Append(SlotAddr);
+        sb.Append(")");
+        return sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class MoveSkillToSlot_result : TBase
+    {
+      private int _success;
+
+      public int Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool success;
+      }
+
+      public MoveSkillToSlot_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 0:
+              if (field.Type == TType.I32) {
+                Success = iprot.ReadI32();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+
+      public void Write(TProtocol oprot) {
+        TStruct struc = new TStruct("MoveSkillToSlot_result");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+
+        if (this.__isset.success) {
+          field.Name = "Success";
+          field.Type = TType.I32;
+          field.ID = 0;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI32(Success);
+          oprot.WriteFieldEnd();
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+
+      public override string ToString() {
+        StringBuilder sb = new StringBuilder("MoveSkillToSlot_result(");
         sb.Append("Success: ");
         sb.Append(Success);
         sb.Append(")");

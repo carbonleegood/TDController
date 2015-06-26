@@ -106,6 +106,8 @@
     <Compile Include="Thrift结构\MonsterInfo.cs" />
     <Compile Include="Thrift结构\PlayerInfo.cs" />
     <Compile Include="Thrift结构\PosInfo.cs" />
+    <Compile Include="Thrift结构\SkillInfo.cs" />
+    <Compile Include="Thrift结构\SlotSkillInfo.cs" />
     <Compile Include="WorkFlow.cs" />
     <EmbeddedResource Include="Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
