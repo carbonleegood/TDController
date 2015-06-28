@@ -110,7 +110,7 @@ namespace Controller
         {
             string strKey ="GGGG";
            // Program.transport = new TPipe(@".", strKey);
-            Program.transport = new TSocket("192.168.137.197",9992);
+            Program.transport = new TSocket("192.168.253.9",9992);
             Program.protocol = new TBinaryProtocol(Program.transport);
             Program.client = new GameFuncCall.Client(Program.protocol);
             Program.transport.Open();

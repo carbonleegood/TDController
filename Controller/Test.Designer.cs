@@ -315,6 +315,7 @@
             this.btnMoveSkill.TabIndex = 5;
             this.btnMoveSkill.Text = "移动技能到槽";
             this.btnMoveSkill.UseVisualStyleBackColor = true;
+            this.btnMoveSkill.Click += new System.EventHandler(this.btnMoveSkill_Click);
             // 
             // btnSkillKey
             // 
@@ -324,6 +325,7 @@
             this.btnSkillKey.TabIndex = 4;
             this.btnSkillKey.Text = "技能按键";
             this.btnSkillKey.UseVisualStyleBackColor = true;
+            this.btnSkillKey.Click += new System.EventHandler(this.btnSkillKey_Click);
             // 
             // btnClickKey
             // 

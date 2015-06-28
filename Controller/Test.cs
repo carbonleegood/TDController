@@ -165,11 +165,11 @@ namespace Controller
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            Pos b = new Pos(0,0);
-            Pos m = new Pos(-1,5);
-            Pos t=CalcAttackPos(b,m);
-            MessageBox.Show(t.X.ToString()+" "+t.Y.ToString());
-          //  Program.client.Test(0,0);
+            //Pos b = new Pos(0,0);
+            //Pos m = new Pos(-1,5);
+            //Pos t=CalcAttackPos(b,m);
+            //MessageBox.Show(t.X.ToString()+" "+t.Y.ToString());
+            Program.client.Test(0,0);
         }
         private void btnGetPlayerInfo_Click(object sender, EventArgs e)
         {
@@ -201,9 +201,9 @@ namespace Controller
         }
         private void btnGetPlayerPos_Click(object sender, EventArgs e)
         {
-            PlayerInfo player = Program.client.GetPlayerInfo();
-            tb3.Text = player.X.ToString();
-            tb4.Text = player.Y.ToString();
+           PosInfo pos = Program.client.GetPlayerPos();
+           tb3.Text = pos.X.ToString();
+           tb4.Text = pos.Y.ToString();
         }
         private void btnMonsterList_Click(object sender, EventArgs e)
         {
@@ -445,6 +445,21 @@ namespace Controller
         private void btnUnloadDll_Click(object sender, EventArgs e)
         {
             Program.client.UnloadDll();
+        }
+
+        private void btnMoveSkill_Click(object sender, EventArgs e)
+        {
+            int SkillID = 0;
+            int SlotAddr=0;
+            int.TryParse(tb1.Text, out SkillID);
+            int.TryParse(tb2.Text, out SlotAddr);
+           // int 
+            Program.client.MoveSkillToSlot(SkillID, SlotAddr);
+        }
+
+        private void btnSkillKey_Click(object sender, EventArgs e)
+        {
+            Program.client.ClickSkillKey(49);
         }
     }
 }
