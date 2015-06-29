@@ -17,6 +17,20 @@ namespace Controller
     }
     class Func
     {
+        public static double CalcAngle(double px,double py,double tx,double ty)
+        {
+            double temp1 = (ty - py);
+            double temp2 = (tx - px);
+            double angle = Math.Atan2(temp1, temp2);
+            if (angle < 0)
+                angle += 2 * 3.14159266;
+
+            if (angle < 3.1415926)
+                angle = 3.1415926 - angle;
+            else
+                angle = 7.8539816 - angle;
+            return angle;
+        }
         public static double CalcAngle(Pos pPos, Pos tPos)
         {
             double temp1 = (tPos.Y - pPos.Y);
